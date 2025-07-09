@@ -1,0 +1,12 @@
+
+export { default as LandingPageLayout } from "./landingPageLayout"
+export { default as CustomButton } from "./customButton"
+export { default as CustomSelect } from "./customSelect"
+export { default as CustomInput } from "./formInput"
+export { default as VideoPlayer } from "./customVideoPlayer"
+export { default as Mobileapplink } from "./mobileapplink"
+export { default as landingPageLayout } from "./landingPageLayout"
+export { default as MapInfo } from "./mapInfo"
+export { default as SocialMedia } from "./socialMedia"
+export { default as ModalLayout } from "./modalLayout"
+export { default as GoogleBtn } from "./googleBtn"
