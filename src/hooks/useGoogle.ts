@@ -9,8 +9,7 @@ import { useState } from "react";
 import Cookies from 'js-cookie'; 
 
 const useGoogle = () => {
-    const [open, setOpen] = useState(true); 
-    const [tokenData, setTokenData] = useState<string>(""); 
+    const [open, setOpen] = useState(true);  
 
     const { mutate: signInWithGoogle, isPending: signInPending } = useMutation({
         mutationFn: (googleToken: string) =>
@@ -115,8 +114,7 @@ const useGoogle = () => {
 
     return {
         signInPending, 
-        checking,
-        setTokenData,
+        checking, 
         signInWithGoogle,
         formik,
         open,
