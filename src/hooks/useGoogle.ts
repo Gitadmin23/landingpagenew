@@ -1,15 +1,16 @@
 import type { ILoginUser } from "@/helpers/models/auth";
-import { unsecureHttpService } from "@/helpers/services/httpService";
+import httpService, { unsecureHttpService } from "@/helpers/services/httpService";
 import { useMutation } from "@tanstack/react-query";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { toaster } from "@/components/ui/toaster";
-import { URLS } from "@/helpers/services/urls";
+import { EVENT_PAGE_URL, URLS } from "@/helpers/services/urls";
 import { useState } from "react";
-import Cookies from 'js-cookie'; 
+import Cookies from 'js-cookie';
 
 const useGoogle = () => {
-    const [open, setOpen] = useState(true);  
+    const [open, setOpen] = useState(true);
+    const [access_Token, setAccessToken] = useState("");
 
     const { mutate: signInWithGoogle, isPending: signInPending } = useMutation({
         mutationFn: (googleToken: string) =>
@@ -22,26 +23,26 @@ const useGoogle = () => {
             const accessToken = data?.data?.access_token;
 
             if (accessToken) {
-                Cookies.set("chase_token", "checking", {
-                    // For localhost, omit domain or use 127.0.0.1
-                    // domain: "http://localhost:3001/",
-                    path: "http://localhost:3001/",
+
+                Cookies.set("chase_token", accessToken, {
+                    path: "/",
                     secure: true,
-                    sameSite: "Lax", // Use Lax for dev, None only when required with HTTPS
+                    sameSite: "Lax",
                 }); 
 
                 toaster.create({
-                    title: "Login Successful", 
+                    title: "Login Successful",
                     type: "success",
                     closable: true,
-                }); 
+                });
+
+                setAccessToken(accessToken)
 
                 checkUserInfo(data?.data?.access_token)
-                
+
             } else {
                 toaster.create({
-                    title: "Error",
-                    description: "Token missing in response",
+                    title: "Token missing in response", 
                     type: "error",
                     closable: true,
                 });
@@ -50,8 +51,7 @@ const useGoogle = () => {
         onError: (error: any) => {
             console.error("Google sign-in failed:", error);
             toaster.create({
-                title: "Error",
-                description: "Google sign-in failed",
+                title: "Google sign-in failed",
                 type: "error",
                 closable: true,
             });
@@ -61,7 +61,7 @@ const useGoogle = () => {
     const { mutate: checkUserInfo, isPending: checking } = useMutation({
         mutationFn: (accessToken: string) =>
             unsecureHttpService.get(
-                URLS.GET_USER_PRIVATE_PROFILE, 
+                URLS.GET_USER_PRIVATE_PROFILE,
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -71,24 +71,64 @@ const useGoogle = () => {
         onSuccess: (data: any) => {
             if (data?.data?.username === data?.data?.email) {
                 setOpen(true);
+
             } else { 
 
-                console.log(data);
-                
+                console.log("testing"); 
 
+                window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}`);
+                // window.location.href = `${EVENT_PAGE_URL}?token=${access_Token}`;
                 // Optional: redirect or load user profile
             }
         },
         onError: (error: any) => {
             console.error("Failed to fetch user info:", error);
             toaster.create({
-                title: "Error",
-                description: "Incorrect Username or Password",
+                title: "Incorrect Username or Password", 
                 type: "error",
                 closable: true,
             });
         },
     });
+
+    const editProfile = useMutation({
+        mutationFn: (data: any) => httpService.put(`${URLS.UPDATE_PROFILE}`, data),
+        onSuccess: () => { 
+
+            toaster.create({ 
+                title: "Profile Updated",
+                type: "success",
+                closable: true,
+            });
+
+            window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}`);
+
+            // if (index) {
+            //     if (type === "DONATION") {
+            //         router.push(`/dashboard/donation/${index}`);
+            //     } else if (type === "RENTAL") {
+            //         router.push(`/dashboard/kisok/details-rental/${index}`);
+            //     } else if (type === "SERVICE") {
+            //         router.push(`/dashboard/kisok/service/${index}`);
+            //     } else if (type === "KIOSK") {
+            //         router.push(`/dashboard/kisok/details/${index}`);
+            //     } else {
+            //         router.push(`/dashboard/event/details/${(affiliateID === "affiliate" || affiliateIDtwo) ? affiliate ? affiliate : affiliateIDtwo : index}${(affiliateID === "affiliate" || affiliateIDtwo) ? "?type=affiliate" : ""}`);
+            //     }
+            // } else {
+            //     router.push('/dashboard/product')
+            // }
+        },
+        onError: () => { 
+
+            toaster.create({ 
+                title: "An error occured while updating your profile",
+                type: "error",
+                closable: true,
+            }); 
+
+        }
+    })
 
     const formik = useFormik({
         initialValues: {
@@ -108,13 +148,16 @@ const useGoogle = () => {
                 .required("Phone number is required"),
         }),
         onSubmit: (data: ILoginUser) => {
+            editProfile.mutate(data)
             // Form submission logic (not used in Google sign-in flow)
         },
-    }); 
+    });
+
+
 
     return {
-        signInPending, 
-        checking, 
+        signInPending,
+        checking,
         signInWithGoogle,
         formik,
         open,

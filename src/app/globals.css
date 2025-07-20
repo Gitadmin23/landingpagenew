@@ -35,16 +35,18 @@ a {
   text-decoration: none;
 }
 
+/* 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: light;
   }
-}
+} */
 
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }

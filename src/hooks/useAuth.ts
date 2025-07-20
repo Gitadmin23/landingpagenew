@@ -5,12 +5,13 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
-// import Cookies from "js-cookie"
+import Cookies from "js-cookie"
+import { EVENT_PAGE_URL } from "@/helpers/services/urls";
 
 const useAuth = () => {
 
     const router = useRouter()
- 
+
 
     const { mutate: signIn, isPending: signInPending } = useMutation({
         mutationFn: (data: ILogin) => unsecureHttpService.post(`/auth/signin`, data),
@@ -33,10 +34,15 @@ const useAuth = () => {
                 type: "success",
                 closable: true
             })
-            // toast.success("Login Successful")
-            // Cookies.set("chase_token", data?.data?.access_token) 
-            console.log(data?.data);
-            router?.push("/dashboard")
+            Cookies.set("chase_token", data?.data?.access_token, {
+                path: "/",
+                secure: true,
+                sameSite: "Lax",
+            });
+
+            // Pass the token to App B through URL
+            window.location.href = `${EVENT_PAGE_URL}?token=${data?.data?.access_token}`;
+             
         },
     });
 
