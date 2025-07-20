@@ -1,3 +1,4 @@
+"use client"
 import type { ILoginUser } from "@/helpers/models/auth";
 import httpService, { unsecureHttpService } from "@/helpers/services/httpService";
 import { useMutation } from "@tanstack/react-query";

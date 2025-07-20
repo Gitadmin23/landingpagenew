@@ -1,3 +1,4 @@
+"use client"
 import { CloseButton, Dialog, Flex } from "@chakra-ui/react";
 
 interface IProps {
@@ -7,7 +8,9 @@ interface IProps {
     trigger?: boolean;
     open?: boolean;
     title?: string;
+    placement?: "top" | "center" | "bottom"
     closeBtn?: boolean;
+    close?: () => void;
     size?: "xs" | "sm" | "md" | "lg" | "cover" | "full"
 }
 
@@ -18,28 +21,32 @@ export default function ModalLayout({
     trigger,
     open,
     title,
+    close,
     closeBtn,
+    placement = "center",
     size
 }: IProps) {
 
     return (
         <>
             {!trigger && (
-                <Dialog.Root size={size ?? "md"} >
+                <Dialog.Root placement={placement ?? "center"}  size={size ?? "md"} >
                     <Dialog.Trigger >
                         {button}
                     </Dialog.Trigger>
                     <Dialog.Backdrop />
-                    <Dialog.Positioner>
-                        <Dialog.Content>
+                    <Dialog.Positioner >
+                        <Dialog.Content bgColor={"white"} mt={"10"}>
                             <Dialog.CloseTrigger />
-                            <Dialog.Header>
-                                <Dialog.Title>{title}</Dialog.Title>
-                                {closeBtn && (
-                                    <Dialog.CloseTrigger asChild>
-                                        <CloseButton size="sm" />
-                                    </Dialog.CloseTrigger>
-                                )}
+                            <Dialog.Header >
+                                <Flex px={"3"} >
+                                    <Dialog.Title >{title}</Dialog.Title>
+                                    {closeBtn && (
+                                        <Dialog.CloseTrigger asChild>
+                                            <CloseButton size="sm" />
+                                        </Dialog.CloseTrigger>
+                                    )}
+                                </Flex>
                             </Dialog.Header>
                             <Flex w={"full"} h={"full"} >
                                 {children}
@@ -53,13 +60,13 @@ export default function ModalLayout({
                 </Dialog.Root>
             )}
             {trigger && (
-                <Dialog.Root open={open} > 
+                <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
                     <Dialog.Positioner>
-                        <Dialog.Content>
+                        <Dialog.Content  bgColor={"white"}>
                             <Dialog.CloseTrigger />
-                            <Dialog.Header>
-                                <Dialog.Title>{title}</Dialog.Title>
+                            <Dialog.Header pt={"4"} pl={"4"} textAlign={"center"} >
+                                <Dialog.Title >{title}</Dialog.Title>
                                 {closeBtn && (
                                     <Dialog.CloseTrigger asChild>
                                         <CloseButton size="sm" />

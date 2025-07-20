@@ -1,3 +1,4 @@
+"use client"
 import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Image, Spinner, Text } from '@chakra-ui/react'
 import { useSearchParams } from 'next/navigation';

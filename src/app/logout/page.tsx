@@ -1,11 +1,9 @@
 
-import { ModalLayout } from "@/components/shared";
-import { Flex, Spinner } from "@chakra-ui/react"; 
-import { signOut, useSession } from "next-auth/react";
+import { LogoutSpinner } from "@/components/shared"; 
 
 export default function Logout() {
+
     return (
-        <Flex> 
-        </Flex>
+        <LogoutSpinner />
     )
 }

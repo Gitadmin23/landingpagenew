@@ -43,7 +43,7 @@ export default function AuthPage() {
                     </Checkbox.Root>
                     <Text onClick={() => router.push("/auth/forgotpassword")} as={"button"} color={"#233DF3"} >Forgot Password</Text>
                 </Flex> 
-                <CustomButton isLoading={signInPending} borderRadius={"9999px"} mt={"4"} height={"50px"} text={"Login"} />
+                <CustomButton isLoading={signInPending} onClick={()=> formik.handleSubmit()} borderRadius={"9999px"} mt={"4"} height={"50px"} text={"Login"} />
                 <Text fontSize={"14px"} mt={"4"} >{`Don't have account ?`} <span style={{ color: "#233DF3", fontWeight: "600" }} role='button' onClick={() => router?.push("/auth/signup")} >Sign Up</span></Text>
             </Flex>
         </Flex>

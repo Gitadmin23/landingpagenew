@@ -1,3 +1,4 @@
+"use client"
 import { GoogleIcon } from "@/svg";
 import { Button, Flex, Text } from "@chakra-ui/react";
 import ModalLayout from "./modalLayout";

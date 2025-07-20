@@ -10,3 +10,5 @@ export { default as MapInfo } from "./mapInfo"
 export { default as SocialMedia } from "./socialMedia"
 export { default as ModalLayout } from "./modalLayout"
 export { default as GoogleBtn } from "./googleBtn"
+
+export { default as LogoutSpinner } from "./logoutSpinner"
