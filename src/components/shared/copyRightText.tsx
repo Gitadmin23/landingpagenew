@@ -8,7 +8,9 @@ function CopyRightText(props: Props) {
     const date = new Date()     
 
     return (
-        <>Chasescroll Llc ©️ {date.getFullYear()}. All rights reserved.</>
+        <>
+            Chasescroll Llc ©️ {date.getFullYear()}. All rights reserved.
+        </>
     )
 }
 
