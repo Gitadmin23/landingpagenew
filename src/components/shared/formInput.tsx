@@ -1,7 +1,9 @@
 "use client"
 import { Flex, Input, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-// import { useField } from 'formik';
+import { IoEye, IoEyeOff } from 'react-icons/io5';
+import PhoneInput from 'react-phone-input-2'
+import "react-phone-input-2/lib/style.css";
 
 interface IProps {
     name: string;
@@ -16,7 +18,9 @@ interface IProps {
     iconback?: React.ReactNode
     setValue: (name: string, value: string) => void,
     errors?: any,
-    touched?: any
+    touched?: any,
+    phone?: boolean,
+    isPassword?: boolean
 }
 
 export default function FormInput(
@@ -33,7 +37,9 @@ export default function FormInput(
         iconback,
         setValue,
         errors,
-        touched
+        touched,
+        phone,
+        isPassword
     }: IProps) {
 
     const changeHandler = (item: string) => {
@@ -41,6 +47,8 @@ export default function FormInput(
     }
 
     const [newValue, setNewValue] = useState("")
+
+    const [showPassWord, setShowPassword] = useState("password")
 
     useEffect(() => {
         setNewValue(value[name] ?? "")
@@ -57,26 +65,70 @@ export default function FormInput(
                             {icon}
                         </Flex>
                     )}
-                    {hasBackIcon && (
-                        <Flex w={"48px"} h={height ?? "45px"} justifyContent={"center"} alignItems={"center"} px={"2"} >
-                            {iconback}
+                    {(hasBackIcon || isPassword) && (
+                        <Flex w={"48px"} h={height ?? "45px"} position={"absolute"} right={"0px"} zIndex={"20"} cursor={"pointer"} justifyContent={"center"} alignItems={"center"} px={"2"} >
+                            {isPassword ? (
+                                <Flex onClick={() => setShowPassword((prev) => prev === "text" ? "password" : "text")} >
+                                    {showPassWord !== "text" ?
+                                        <IoEye size={"20px"} /> :
+                                        <IoEyeOff size={"20px"} />
+                                    }
+                                </Flex>
+                            ) : (
+                                <>
+                                    {iconback}
+                                </>
+                            )}
                         </Flex>
                     )}
+                    {!phone && (
+                        <Input
+                            type={isPassword ? showPassWord : type ?? "text"}
+                            value={newValue}
+                            onChange={(e) => changeHandler(e.target.value)}
+                            w={"full"}
+                            h={height ?? "45px"}
+                            px={"4"}
+                            outline={"none"}
+                            bgColor={"white"}
+                            color={"black"}
+                            borderRadius={"9999px"}
+                            border={"1px solid #EAEBED"}
+                            _placeholder={{ color: "gray.500" }}
+                            placeholder={placeholder}
+                        />
+                    )}
+                    {phone && (
+                        <PhoneInput
+                            country={"ng"}
+                            enableSearch
+                            // style={{ width: '100%', height: '45px', borderWidth: '1px', borderRadius: '5px', borderColor: 'lightgrey', padding: '10px' }}
 
-                    <Input
-                        type={type ?? "text"}
-                        value={newValue}
-                        onChange={(e) => changeHandler(e.target.value)}
-                        w={"full"}
-                        h={height ?? "45px"}
-                        px={"4"}
-                        outline={"none"}
-                        bgColor={"white"}
-                        borderRadius={"9999px"}
-                        border={"1px solid #EAEBED"}
-                        _placeholder={{ color: "gray.500" }}
-                        placeholder={placeholder}
-                    />
+                            containerStyle={{
+                                borderRadius: '32px',
+                                overflow: 'hidden',
+                                height: '45px',
+                                width: "100%",
+                            }}
+                            inputStyle={{
+                                borderRadius: '32px',
+                                height: '45px',
+                                width: "100%",
+                                paddingLeft: '48px', // space for flag
+                            }}
+                            buttonStyle={{
+                                borderRadius: '32px 0 0 32px',
+                                height: '45px',
+                            }}
+                            dropdownStyle={{
+                                position: 'fixed', // 👈 This makes the popup fixed
+                                zIndex: 2000,
+                                // ensure it's above modals/overlays
+                            }}
+                            value={newValue}
+                            onChange={(phone: any) => changeHandler(phone)}
+                        />
+                    )}
                 </Flex>
                 {touched && (
                     <>

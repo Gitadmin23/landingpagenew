@@ -20,16 +20,16 @@ export default function HeroSection() {
 
     const [open, setOpen] = useState(false)
 
-    const { primaryColor, secondaryBackgroundColor, borderColor, mainBackgroundColor } = useCustomTheme()
+    const { primaryColor, borderColor } = useCustomTheme()
     const { push } = useRouter()
 
     const clickHandler = (item: "kiosk" | "service" | "rental" | "event" | "donation") => {
         if (item === "event") {
             push(`/product`)
         } else if (item === "donation") {
-            push(`/product/fundraising`)
+            push(`/product?type=fundraising`)
         } else {
-            push(`/product/kiosk${`?type=${item}`}`)
+            push(`/product${`?type=${item}`}`)
         }
     }
 

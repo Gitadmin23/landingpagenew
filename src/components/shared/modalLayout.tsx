@@ -11,7 +11,7 @@ interface IProps {
     placement?: "top" | "center" | "bottom"
     closeBtn?: boolean;
     close?: () => void;
-    size?: "xs" | "sm" | "md" | "lg" | "cover" | "full"
+    size?: "xs" | "sm" | "md" | "lg" | "cover" | "full" | Array<"xs" | "sm" | "md" | "lg" | "cover" | "full">
 }
 
 export default function ModalLayout({
@@ -62,7 +62,7 @@ export default function ModalLayout({
             {trigger && (
                 <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
-                    <Dialog.Positioner>
+                    <Dialog.Positioner px={"3"} >
                         <Dialog.Content  bgColor={"white"}>
                             <Dialog.CloseTrigger />
                             <Dialog.Header pt={"4"} pl={"4"} textAlign={"center"} >
