@@ -54,7 +54,7 @@ export default function VerficationForm(
         <ModalLayout open={open} size={"xs"} trigger={true} close={() => setOpen(true)} >
             <Flex overflowY={"auto"} gap={"4"} px={"4"} py={"5"} alignItems={"center"} w={"full"} flexDir={"column"}  >
                 <Flex flexDir={"column"} gap={"6px"} >
-                    <Text fontSize={["20px", "20px", "32px"]} lineHeight={["18px", "18px", "30px"]} color={"#1F1F1F"} textAlign={"center"} fontWeight={"700"} >Email Verification Code</Text>
+                    <Text fontSize={["20px", "20px", "20px"]} lineHeight={["18px", "18px", "30px"]} color={"#1F1F1F"} textAlign={"center"} fontWeight={"700"} >Email Verification Code</Text>
                     <Text fontSize={"14px"} textAlign={"center"} >Enter the 6_digit code we sent to your email <span style={{ fontWeight: "500" }} >{email}</span></Text>
                 </Flex>
                 <PinInput.Root size={"xl"} onValueChange={(item) => setCode(item.valueAsString)} placeholder="0">

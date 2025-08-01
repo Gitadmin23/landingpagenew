@@ -23,13 +23,13 @@ export default function HeroSection() {
     const { primaryColor, borderColor } = useCustomTheme()
     const { push } = useRouter()
 
-    const clickHandler = (item: "kiosk" | "service" | "rental" | "event" | "donation") => {
+    const clickHandler = (item: "kiosks" | "services" | "rentals" | "event" | "donation") => {
         if (item === "event") {
             push(`/product`)
         } else if (item === "donation") {
-            push(`/product?type=fundraising`)
+            push(`/product/fundraising`)
         } else {
-            push(`/product${`?type=${item}`}`)
+            push(`/product/${item}`)
         }
     }
 
@@ -62,7 +62,7 @@ export default function HeroSection() {
                                 <Text fontSize={["10px", "12px", "14px"]} >Event</Text>
                             </Flex>
                         } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "event" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "event" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        <CustomButton onMouseOver={() => setActive("service")} onMouseOut={() => setActive("")} onClick={() => clickHandler("service")} text={
+                        <CustomButton onMouseOver={() => setActive("service")} onMouseOut={() => setActive("")} onClick={() => clickHandler("services")} text={
                             <Flex alignItems={"center"} gap={"2"} >
                                 <Flex display={["none", "none", "flex"]} >
                                     <ServiceIcon color={active === "service" ? "white" : "black"} />
@@ -70,7 +70,7 @@ export default function HeroSection() {
                                 <Text fontSize={["10px", "12px", "14px"]} >Service</Text>
                             </Flex>
                         } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "service" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "service" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        <CustomButton onMouseOver={() => setActive("rental")} onMouseOut={() => setActive("")} onClick={() => clickHandler("rental")} text={
+                        <CustomButton onMouseOver={() => setActive("rental")} onMouseOut={() => setActive("")} onClick={() => clickHandler("rentals")} text={
                             <Flex alignItems={"center"} gap={"2"} >
                                 <Flex display={["none", "none", "flex"]} >
                                     <RentalIcon color={active === "rental" ? "white" : "black"} />
@@ -78,7 +78,7 @@ export default function HeroSection() {
                                 <Text fontSize={["10px", "12px", "14px"]} >Rental</Text>
                             </Flex>
                         } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "rental" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "rental" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        <CustomButton onMouseOver={() => setActive("kiosk")} onMouseOut={() => setActive("")} onClick={() => clickHandler("kiosk")} text={
+                        <CustomButton onMouseOver={() => setActive("kiosk")} onMouseOut={() => setActive("")} onClick={() => clickHandler("kiosks")} text={
                             <Flex alignItems={"center"} gap={"2"} >
                                 <Flex display={["none", "none", "flex"]} >
                                     <StoreIcon color={active === "kiosk" ? "white" : "black"} />

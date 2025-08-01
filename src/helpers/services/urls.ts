@@ -13,7 +13,7 @@ export const URLS = {
 
 export const IMAGE_URL = process.env.NEXT_PUBLIC_RESOURCE_URL as string;
 export const EVENT_PAGE_URL = process.env.NEXT_PUBLIC_EVENT_PAGE_URL as string;
-export const PRODUCT_PAGE_URL = process.env.NEXT_PUBLIC_PRODUCT_PAGE_URL as string;
+export const DASHBOARDPAGE_URL = process.env.NEXT_PUBLIC_DASHBOARDPAGE_URL as string
 export const POST_PAGE_URL = process.env.NEXT_PUBLIC_POST_PAGE_URL as string;
 
 // export const RESOURCE_BASE_URL = process.env.NEXT_PUBLIC_AWS_BASE_URL as string;

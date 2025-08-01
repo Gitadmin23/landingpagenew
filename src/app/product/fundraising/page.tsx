@@ -13,7 +13,7 @@ export default function Page() {
             <Flex pos={"absolute"} onClick={() => router.push("/")} top={"8"} bgColor={"white"} cursor={"pointer"} justifyContent={"center"} alignItems={"center"} zIndex={"20"} left={"8"} w={"9"} h={"9"} rounded={"full"} borderWidth={"1px"} >
                 <IoChevronBack size={"25px"} color="black" />
             </Flex> 
-            <iframe src={EVENT_PAGE_URL + "/product/events?frame=true"} width="100%" height="100%" ></iframe> 
+            <iframe src={EVENT_PAGE_URL + "/product/fundraising?frame=true"} width="100%" height="100%" ></iframe> 
         </Flex>
     )
 }
