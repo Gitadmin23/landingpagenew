@@ -1,9 +1,10 @@
+
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Provider"; 
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]"; 
+import { authOptions } from "@/pages/api/auth/[...nextauth]";  
 
 
 const raleway = Raleway({
