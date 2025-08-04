@@ -23,10 +23,7 @@ export default function LogOutSpinner() {
     
             Cookies.set("chase_token", "");
         }
-    }, [])
-
-    console.log(status);
-    
+    }, []) 
 
     return (
         <Flex w={"full"} h={"100vh"} bgColor={"white"} >
