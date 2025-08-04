@@ -1,7 +1,7 @@
 "use client"
 import { EVENT_PAGE_URL } from "@/helpers/services/urls";
 import { Flex } from "@chakra-ui/react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { IoChevronBack } from "react-icons/io5";
 
 
