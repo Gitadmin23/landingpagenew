@@ -25,7 +25,7 @@ const useAuth = () => {
         mutationFn: (data: ILogin) => unsecureHttpService.post(`/auth/signin`, data),
         onError: (error: any) => {
             toaster.create({
-                title: "Incorrect Username or Password", 
+                title: "Incorrect Username or Password",
                 type: "error",
                 closable: true
             })
@@ -131,7 +131,7 @@ const useAuth = () => {
                 closable: true
             })
         },
-        onSuccess: (data) => { 
+        onSuccess: (data) => {
             toaster.create({
                 title: "Password Reset Successful",
                 type: "success",
@@ -189,7 +189,12 @@ const useAuth = () => {
                 dob: data?.dob,
                 email: data?.email,
                 confirmPassword: data?.confirmPassword,
-                phone: data?.phone
+                "data": {
+                    "mobilePhone": {
+                        "objectPublic": true,
+                        "value": data?.phone
+                    }
+                }  
             })
         },
     });
@@ -250,7 +255,7 @@ const useAuth = () => {
         sendSuccess,
         formikPassword,
         setCode,
-        code, 
+        code,
         loadingPassword
     }
 
