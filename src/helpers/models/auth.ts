@@ -14,8 +14,7 @@ export interface IRegister {
   confirmPassword: string,
 }
 
-export interface ILoginUser {
-  email: string,
+export interface ILoginUser { 
   firstName: string,
   lastName: string,
   username: string,

@@ -68,10 +68,9 @@ export default function SignUpForm(
                         <Flex overflowY={"auto"} overflowX={"hidden"} gap={"3"} h={["full", "full", "60vh"]} pb={"5"} pt={"1"} px={"4"} fontSize={"14px"} alignItems={"center"} maxW={"375px"} w={"full"} flexDir={"column"}  >
                             <Text fontSize={["20px", "20px", "32px"]} color={"#1F1F1F"} textAlign={"center"} fontWeight={"700"} mb={"4"} >Create your account</Text>
                             <CustomInput label="Username" name='username' type='text' placeholder='Enter your Username' errors={formik.errors} touched={formik.touched} value={formik?.values} setValue={formik?.setFieldValue} />
-                            <CustomInput label="phone" name='phone' phone={true} type='text' placeholder='' errors={formik.errors} touched={formik.touched} value={formik?.values} setValue={formik?.setFieldValue} />
+                            <CustomInput label="phone" name='phone' phone={true} type="tel" placeholder='' errors={formik.errors} touched={formik.touched} value={formik?.values} setValue={formik?.setFieldValue} />
                             <CustomInput isPassword={true} label="Password" name='password' type='text' placeholder='Enter your Password' errors={formik.errors} touched={formik.touched} value={formik?.values} setValue={formik?.setFieldValue} />
                             <CustomInput isPassword={true} label="Confirm Password" name='confirmPassword' type='text' placeholder='Enter your Confirm Password' errors={formik.errors} touched={formik.touched} value={formik?.values} setValue={formik?.setFieldValue} />
-                            
                         <Text
                             fontSize={"xs"} 
                             marginLeft="0px"

@@ -10,7 +10,7 @@ import { useState } from "react";
 import Cookies from 'js-cookie';
 
 const useGoogle = () => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [access_Token, setAccessToken] = useState("");
 
     const { mutate: signInWithGoogle, isPending: signInPending } = useMutation({
@@ -29,7 +29,7 @@ const useGoogle = () => {
                     path: "/",
                     secure: true,
                     sameSite: "Lax",
-                }); 
+                });
 
                 toaster.create({
                     title: "Login Successful",
@@ -43,7 +43,7 @@ const useGoogle = () => {
 
             } else {
                 toaster.create({
-                    title: "Token missing in response", 
+                    title: "Token missing in response",
                     type: "error",
                     closable: true,
                 });
@@ -73,9 +73,7 @@ const useGoogle = () => {
             if (data?.data?.username === data?.data?.email) {
                 setOpen(true);
 
-            } else { 
-
-                console.log("testing"); 
+            } else {
 
                 window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}`);
                 // window.location.href = `${EVENT_PAGE_URL}?token=${access_Token}`;
@@ -85,7 +83,7 @@ const useGoogle = () => {
         onError: (error: any) => {
             console.error("Failed to fetch user info:", error);
             toaster.create({
-                title: "Incorrect Username or Password", 
+                title: "Incorrect Username or Password",
                 type: "error",
                 closable: true,
             });
@@ -94,53 +92,36 @@ const useGoogle = () => {
 
     const editProfile = useMutation({
         mutationFn: (data: any) => httpService.put(`${URLS.UPDATE_PROFILE}`, data),
-        onSuccess: () => { 
+        onSuccess: () => {
 
-            toaster.create({ 
+            toaster.create({
                 title: "Profile Updated",
                 type: "success",
                 closable: true,
             });
 
             window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}`);
-
-            // if (index) {
-            //     if (type === "DONATION") {
-            //         router.push(`/dashboard/donation/${index}`);
-            //     } else if (type === "RENTAL") {
-            //         router.push(`/dashboard/kisok/details-rental/${index}`);
-            //     } else if (type === "SERVICE") {
-            //         router.push(`/dashboard/kisok/service/${index}`);
-            //     } else if (type === "KIOSK") {
-            //         router.push(`/dashboard/kisok/details/${index}`);
-            //     } else {
-            //         router.push(`/dashboard/event/details/${(affiliateID === "affiliate" || affiliateIDtwo) ? affiliate ? affiliate : affiliateIDtwo : index}${(affiliateID === "affiliate" || affiliateIDtwo) ? "?type=affiliate" : ""}`);
-            //     }
-            // } else {
-            //     router.push('/dashboard/product')
-            // }
         },
-        onError: () => { 
+        onError: () => {
 
-            toaster.create({ 
+            toaster.create({
                 title: "An error occured while updating your profile",
                 type: "error",
                 closable: true,
-            }); 
+            });
 
         }
     })
 
     const formik = useFormik({
         initialValues: {
-            email: "",
             firstName: "",
             lastName: "",
             username: "",
             phone: "",
         },
         validationSchema: Yup.object({
-            email: Yup.string().email("Invalid email address").required("Email is required"),
+            // email: Yup.string().email("Invalid email address").required("Email is required"),
             firstName: Yup.string().min(2, "First name must be at least 2 characters").required("First name is required"),
             lastName: Yup.string().min(2, "Last name must be at least 2 characters").required("Last name is required"),
             username: Yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
@@ -149,11 +130,20 @@ const useGoogle = () => {
                 .required("Phone number is required"),
         }),
         onSubmit: (data: ILoginUser) => {
-            editProfile.mutate(data)
+            editProfile.mutate({
+                firstName: data.firstName,
+                lastName: data.firstName,
+                username: data.firstName,
+                "data": { 
+                    mobilePhone: {
+                        objectPublic: true,
+                        value: data.phone,
+                    }
+                }
+            })
             // Form submission logic (not used in Google sign-in flow)
         },
     });
-
 
 
     return {
@@ -162,6 +152,7 @@ const useGoogle = () => {
         signInWithGoogle,
         formik,
         open,
+        editProfile
     };
 };
 
