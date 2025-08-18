@@ -33,7 +33,7 @@ export default function AuthPage() {
                     <CustomInput label="Email/Username" name='username' type='text' placeholder='Enter your Email or Username' value={formik?.values} setValue={formik?.setFieldValue} />
                 </Flex>
                 <Flex flexDir={"column"} gap={"1"} mt={"3"} w={"full"} > 
-                    <CustomInput label="Password" name='password' type='password' placeholder='Enter your password' value={formik?.values} setValue={formik?.setFieldValue} />
+                    <CustomInput isPassword={true} label="Password" name='password' type='password' placeholder='Enter your password' value={formik?.values} setValue={formik?.setFieldValue} />
                 </Flex>
                 <Flex justifyContent={"space-between"} w={"full"} mt={"3"} fontSize={"12px"} > 
                     <Checkbox.Root variant={"solid"} size={"sm"} color={"#233DF3"} >

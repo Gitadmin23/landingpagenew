@@ -24,9 +24,9 @@ export default function CustomDatePicker(
     {
         value,
         name,
-        label, 
+        label,
         touched,
-        errors, 
+        errors,
         setValue,
         index = 0
     }: IProps) {
@@ -35,12 +35,22 @@ export default function CustomDatePicker(
         headerTextColor
     } = useCustomTheme()
 
-    const [open, setOpen] = useState(false)
-    const modalContentRef = useRef(null);
-    const triggerRef = useRef(null);
+    const modalContentRef = useRef(null)
 
-    const changeHandler = (item: any) => { 
-        setValue(name[0], Date.parse(new Date(item).toJSON()))
+    const changeHandler = (item: any) => {
+
+        const eighteenYearsAgo = dayjs().subtract(18, "year");
+        if (item.isAfter(eighteenYearsAgo)) {
+            toaster.create({
+                type: "error",
+                title: "You must be at least 18 years old",
+                closable: true
+            })
+            setValue("", Date.parse(new Date(item).toJSON()))
+            return
+        } else {
+            setValue(name[0], Date.parse(new Date(item).toJSON()))
+        }
     }
 
     return (
@@ -49,33 +59,62 @@ export default function CustomDatePicker(
             <Text fontSize={"12px"} lineHeight={"19px"} color={"#626262"} >This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</Text>
             <Flex ref={modalContentRef} flexDir={"column"} color={headerTextColor} gap={"1"} rounded={"full"} >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker 
-                    disableFuture
-                        defaultValue={dayjs(value)}
+                    <DatePicker
+                        disableFuture
+                        value={dayjs(value)}
                         format="MM/DD/YYYY"
                         onChange={(item, context) => {
                             if (context.validationError == null) {
                                 changeHandler(item);
                             }
-                        }}
-                        // open={open}
-                        // onOpen={() => setOpen(true)}
-                        // onClose={() => {
-                        //     setOpen(false);
-                        // }} 
+                        }} 
+                        maxDate={dayjs().subtract(18, "year")}
                         slotProps={{
-                            // textField: {
-                            //     onClick: () => setOpen(true), // open on text field click
-                            // },
                             popper: {
-                                container: modalContentRef.current || undefined,
-                                // anchorEl: triggerRef.current || undefined,
+                                // ensures popper is rendered inside the modal instead of body
+                                container: () => modalContentRef.current || document.body,
+                                modifiers: [
+                                    {
+                                        name: "preventOverflow",
+                                        options: {
+                                            boundary: "viewport",
+                                        },
+                                    },
+                                ],
                                 sx: {
-                                    zIndex: 1700,
-                                    // '& .MuiPaper-root': {
-                                    //     position: 'fixed'
-                                    // },
+                                    zIndex: 2000, // must be higher than Chakra modal backdrop 
                                 },
+                            },
+                            textField: {
+                              variant: "outlined",
+                              fullWidth: true,
+                              // Styles applied to the TextField's input component
+                              InputProps: {
+                                sx: {
+                                  borderRadius: 999, 
+                                  fontSize: 14,    
+                                  height: "50px", 
+                                  pb: "4px",
+                                  "& fieldset": {
+                                    borderRadius: 999,    
+                                    fontSize: 14, 
+                                    height: "50px", 
+                                    pb: "4px",
+                                  },
+                                },
+                              },
+                              // Extra safety if your theme switches variants
+                              sx: {
+                                "& .MuiOutlinedInput-root, & .MuiFilledInput-root, & .MuiInputBase-root": {
+                                  borderRadius: 999,
+                                  fontSize: 14, 
+                                  minHeight: "auto", 
+                                },
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                  borderRadius: 999,
+                                  minHeight: "auto", 
+                                },
+                              },
                             }
                         }}
                     />
