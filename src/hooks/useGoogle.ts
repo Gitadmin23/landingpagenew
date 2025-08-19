@@ -132,8 +132,8 @@ const useGoogle = () => {
         onSubmit: (data: ILoginUser) => {
             editProfile.mutate({
                 firstName: data.firstName,
-                lastName: data.firstName,
-                username: data.firstName,
+                lastName: data.lastName,
+                username: data.username,
                 "data": { 
                     mobilePhone: {
                         objectPublic: true,
