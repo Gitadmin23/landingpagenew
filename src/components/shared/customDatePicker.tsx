@@ -62,9 +62,10 @@ export default function CustomDatePicker(
         <Flex pos={"relative"} zIndex={"50"} position={"relative"} w={"full"} flexDir={"column"} gap={"0.5"} >
             <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
             <Text fontSize={"12px"} lineHeight={"19px"} color={"#626262"} >This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</Text>
+           
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Flex ref={modalContentRef} flexDir={"column"} color={"black"} gap={"1"} rounded={"full"} >
                 <ModalLayout trigger={true} width='fit' open={open} close={() => setOpen(false)} >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Flex flexDir={"column"} w={"full"} pb={"2"} >
                             <DateCalendar
                                 disableFuture
@@ -99,8 +100,7 @@ export default function CustomDatePicker(
                             <Flex w={"full"} justifyContent={"end"} pr={"2"} >
                                 <CustomButton onClick={() => setOpen(false)} fontSize={"xs"} px={"4"} height={"35px"} width={"fit-content"} borderRadius={"full"} text={"Done"} />
                             </Flex>
-                        </Flex>
-                    </LocalizationProvider>
+                        </Flex> 
                 </ModalLayout>
                 <Flex rounded={"full"} cursor={"pointer"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} h={"45px"} display={["flex", "flex", "flex"]} >
                     {!value ? "Select Date" : dateFormat(value)}
@@ -191,58 +191,7 @@ export default function CustomDatePicker(
                     </>
                 )}
             </Flex>
-
-            {/* <Flex display={["flex", "flex", "none"]} >
-                        <MobileDatePicker
-                            disableFuture
-                            value={dayjs(value)}
-                            format="MM/DD/YYYY"
-                            maxDate={dayjs().subtract(18, "year")} // 🔒 prevent selecting under 18
-                            onChange={(date) =>  changeHandler(date)}
-                            slotProps={{
-                                textField: {
-                                    variant: "outlined",
-                                    fullWidth: true,
-                                    inputProps: { readOnly: true }, // avoids keyboard opening
-                                    InputProps: {
-                                        sx: {
-                                            borderRadius: 999,
-                                            fontSize: 14,
-                                            height: "50px",
-                                            pb: "4px",
-                                            "& fieldset": {
-                                                borderRadius: 999,
-                                                fontSize: 14,
-                                                height: "50px",
-                                                pb: "4px",
-                                            },
-                                        },
-                                    },
-                                    sx: {
-                                        "& .MuiOutlinedInput-root": {
-                                            borderRadius: 999, // pill style
-                                            height: 50,
-                                            fontSize: 14,
-                                            "& input": {
-                                                fontSize: 14,
-                                                padding: "8px 12px",
-                                                borderRadius: 999,
-                                            },
-                                        },
-                                    },
-                                },
-                                dialog: {
-                                    // styles for the popup dialog
-                                    sx: {
-                                        "& .MuiPaper-root": {
-                                            borderRadius: 999,
-                                            padding: 2,
-                                        },
-                                    },
-                                },
-                            }}
-                        />
-                    </Flex>*/}
+            </LocalizationProvider>
         </Flex>
     )
 }
