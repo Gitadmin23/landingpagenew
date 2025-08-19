@@ -69,7 +69,7 @@ export default function CustomDatePicker(
                         <Flex flexDir={"column"} w={"full"} pb={"2"} >
                             <DateCalendar
                                 disableFuture
-                                value={dayjs(value)}
+                                // value={dayjs(value)}
                                 onChange={(d) => {
                                     changeHandler(d);
                                     // ✅ After selecting year → move to month, then day
@@ -97,7 +97,7 @@ export default function CustomDatePicker(
                                 }}
 
                             />
-                            <Flex w={"full"} justifyContent={"end"} pr={"2"} >
+                            <Flex w={"full"} justifyContent={"end"} pt={"2"} pr={"2"} >
                                 <CustomButton onClick={() => setOpen(false)} fontSize={"xs"} px={"4"} height={"35px"} width={"fit-content"} borderRadius={"full"} text={"Done"} />
                             </Flex>
                         </Flex> 
