@@ -53,7 +53,7 @@ export default function HeroSection() {
                         transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
                         background: "linear-gradient(115.13deg, rgba(35, 61, 243, 0.2) 20.26%, rgba(21, 35, 141, 0.2) 65.99%), linear-gradient(265.89deg, rgba(0, 0, 0, 0) 18.07%, rgba(0, 0, 0, 0.6) 86.4%)"
                     }} maxW={"833px"} px={["3", "3", "10"]} py={["6", "6", "10"]} rounded={"32px"} flexDir={"column"} alignItems={"center"} gap={"8"} >
-                    <Flex w={["full", "fit-content", "fit-content"]} gap={["3", "3", "0px"]} alignItems={"center"} bgColor={"white"} p={"6px"} rounded={"full"} >
+                    <Flex w={["full", "fit-content", "fit-content"]} gap={["3", "3", "0px"]} justifyContent={"space-around"} alignItems={"center"} bgColor={"white"} p={"6px"} rounded={"full"} >
                         <CustomButton onMouseOver={() => setActive("event")} onMouseOut={() => setActive("")} onClick={() => clickHandler("event")} text={
                             <Flex alignItems={"center"} gap={"2"} >
                                 <Flex display={["none", "none", "flex"]} >
