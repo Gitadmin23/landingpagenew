@@ -86,7 +86,7 @@ export default function HeroSection() {
                                 <Text fontSize={["10px", "12px", "14px"]} >Kiosk</Text>
                             </Flex>
                         } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "kiosk" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "kiosk" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        <Flex w="fit-content" display={["none", "none", "flex"]} >
+                        {/* <Flex w="fit-content" display={["none", "none", "flex"]} > */}
                             <CustomButton onMouseOver={() => setActive("fundraising")} onMouseOut={() => setActive("")} onClick={() => clickHandler("donation")} text={
                                 <Flex alignItems={"center"} gap={"2"} >
                                     <Flex display={["none", "none", "flex"]} >
@@ -94,9 +94,9 @@ export default function HeroSection() {
                                     </Flex>
                                     <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
                                 </Flex>
-                            } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "fundraising" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "fundraising" ? "white" : "black"} width={["107px", "107px", "140px"]} />
-                        </Flex>
-                        <Flex w={"fit-content"} position={"relative"} >
+                            } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "fundraising" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "fundraising" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
+                        {/* </Flex> */}
+                        {/* <Flex w={"fit-content"} position={"relative"} >
 
                             <Flex w={"30px"} onClick={() => setOpen((prev) => !prev)} rounded={"16px"} borderWidth={"1px"} borderColor={"black"} h={"30px"} pt={!open ? "2px" : "0px"} justifyContent={"center"} alignItems={"center"} ml={"auto"} display={["flex", "flex", "none"]}  >
                                 {open && (
@@ -118,7 +118,7 @@ export default function HeroSection() {
                                     } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "fundraising" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "fundraising" ? "white" : "black"} width={["107px", "107px", "140px"]} />
                                 </Flex>
                             )}
-                        </Flex>
+                        </Flex> */}
                     </Flex>
                     {/* <Image src='/images/hero/filter.png' alt='filter' /> */}
 
