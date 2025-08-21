@@ -72,7 +72,7 @@ const useAuth = () => {
                 type: "success",
                 closable: true
             })
-            router.push(`/auth/signup?email=${formikSignUp.values.email}`)
+            router.push(`/auth/signup?email=${formikSignUp.values.email}${eventId ? `&eventId=${eventId}` : ""}${productId ? `&productId=${productId}` : ""}`)
         },
     });
 
