@@ -81,7 +81,7 @@ const useGoogle = () => {
                 if (productId) {
                     window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
                 } else {
-                    window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}&eventId=${eventId}`);
+                    window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}${eventId ? `&eventId=${eventId}` : ""}`);
                 }
                 // window.location.href = `${EVENT_PAGE_URL}?token=${access_Token}`;
                 // Optional: redirect or load user profile
