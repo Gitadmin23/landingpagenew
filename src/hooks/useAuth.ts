@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { toaster } from "@/components/ui/toaster";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie"
-import { EVENT_PAGE_URL, URLS } from "@/helpers/services/urls";
+import { DASHBOARDPAGE_URL, EVENT_PAGE_URL, URLS } from "@/helpers/services/urls";
 import { useState } from "react";
 
 const useAuth = () => {
@@ -17,6 +17,8 @@ const useAuth = () => {
     const [code, setCode] = useState("");
     const query = useSearchParams();
     const codequery = query?.get('code');
+    const eventId = query?.get('eventId');
+    const productId = query?.get('productId'); 
 
     const pathname = usePathname()
 
@@ -43,9 +45,13 @@ const useAuth = () => {
                 secure: true,
                 sameSite: "Lax",
             });
-
-            // Pass the token to App B through URL
-            window.location.href = `${EVENT_PAGE_URL}?token=${data?.data?.access_token}`;
+ 
+            if(productId) {
+                window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
+            } else { 
+                // Pass the token to App B through URL
+                window.location.href = `${EVENT_PAGE_URL}?token=${data?.data?.access_token}${eventId ? `&eventId=${eventId}` : ""}`;
+            }
 
         },
     });

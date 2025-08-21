@@ -5,13 +5,17 @@ import { useMutation } from "@tanstack/react-query";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { toaster } from "@/components/ui/toaster";
-import { EVENT_PAGE_URL, URLS } from "@/helpers/services/urls";
+import { DASHBOARDPAGE_URL, EVENT_PAGE_URL, URLS } from "@/helpers/services/urls";
 import { useState } from "react";
 import Cookies from 'js-cookie';
+import { useSearchParams } from "next/navigation";
 
 const useGoogle = () => {
     const [open, setOpen] = useState(false);
     const [access_Token, setAccessToken] = useState("");
+    const query = useSearchParams();
+    const eventId = query?.get('eventId');
+    const productId = query?.get('productId');
 
     const { mutate: signInWithGoogle, isPending: signInPending } = useMutation({
         mutationFn: (googleToken: string) =>
@@ -73,9 +77,12 @@ const useGoogle = () => {
             if (data?.data?.username === data?.data?.email) {
                 setOpen(true);
 
-            } else {
-
-                window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}`);
+            } else { 
+                if (productId) {
+                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
+                } else {
+                    window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}&eventId=${eventId}`);
+                }
                 // window.location.href = `${EVENT_PAGE_URL}?token=${access_Token}`;
                 // Optional: redirect or load user profile
             }
@@ -134,7 +141,7 @@ const useGoogle = () => {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 username: data.username,
-                "data": { 
+                "data": {
                     mobilePhone: {
                         objectPublic: true,
                         value: data.phone,
