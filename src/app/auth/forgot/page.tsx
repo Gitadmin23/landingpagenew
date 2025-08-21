@@ -12,10 +12,7 @@ export default function Page() {
     const { formikEmail, formikPassword, sendingVerify, loadingPassword } = useAuth()
     const query = useSearchParams();
     const code = query?.get('code');
-    const [ open, setOpen ] = useState(false)
-
-    console.log(formikPassword?.errors);
-    
+    const [ open, setOpen ] = useState(false) 
 
     return (
         <Flex w={"full"} h={"screen"} color={"black"} justifyContent={"center"} alignItems={"center"} >

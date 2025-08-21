@@ -3,7 +3,7 @@ import SignUpForm from "@/components/authComponent/signupForm";
 import VerficationForm from "@/components/authComponent/verificationForm";
 import { GoogleBtn } from "@/components/shared";
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -11,8 +11,16 @@ export default function Signup() {
 
     const router = useRouter()
 
-    const [ open, setOpen ] = useState(false)
-    const [ show, setShow ] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [show, setShow] = useState(false)
+    const query = useSearchParams();
+
+    const eventId = query?.get('eventId');
+    const productId = query?.get('productId');
+
+    const clickHandler = () => {
+        router?.push(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}`)
+    }
 
     return (
         <Flex justifyContent={"center"} alignItems={"center"} color={"black"} bgColor={"#FCFCFC"} h={"full"} w={"full"} position={"relative"} >
@@ -28,7 +36,7 @@ export default function Signup() {
                 <Flex mt={"2"} flexDirection={"column"} pos={"relative"} alignItems={"center"} >
                     <Box width={"400px"} height={"1px"} pos={"absolute"} top={"3"} bgColor={"#BCBCBC"} />
                     <Text px={"2"} bg={"white"} pos={"relative"} color={"#BCBCBC"} zIndex={"10"} >OR</Text>
-                </Flex> 
+                </Flex>
                 <Button onClick={() => setOpen(true)} mt={"4"} h={"50px"} w={"full"} bgColor={"#233DF3"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "#233DF3" }} justifyContent={"center"} alignItems={"center"} >
                     <Text color={"white"} textAlign={"center"} fontWeight={"600"} >Create Account</Text>
                 </Button>
@@ -36,7 +44,7 @@ export default function Signup() {
                     <Text fontSize={"14px"} color={"#434344"} >By signing up, you agree to the Terms of Service and  Privacy Policy , including Cookie Use.</Text>
                 </Flex>
                 <Text fontSize={"17px"} color={"#1F1F1F"} textAlign={"center"} fontWeight={"600"} >Already have an account?</Text>
-                <Button onClick={() => router.push("/auth")} mt={"4"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#233DF3"} bgColor={"white"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "white" }} justifyContent={"center"} alignItems={"center"} >
+                <Button onClick={clickHandler} mt={"4"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#233DF3"} bgColor={"white"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "white" }} justifyContent={"center"} alignItems={"center"} >
                     <Text color={"#233DF3"} textAlign={"center"} fontWeight={"600"} >Sign in</Text>
                 </Button>
             </Flex>

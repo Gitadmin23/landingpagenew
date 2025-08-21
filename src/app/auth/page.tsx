@@ -7,12 +7,19 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Flex } from "@chakra-ui/react";
 import { CustomButton, CustomInput, GoogleBtn } from "@/components/shared";
 import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function AuthPage() {
 
     const { signInPending, formik } = useAuth()
     const router = useRouter()
+    const query = useSearchParams(); 
+    const eventId = query?.get('eventId');
+    const productId = query?.get('productId'); 
+
+    const clickHandler = () => {
+        router?.push(`/auth/signup${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}`)
+    }
 
     return (
         <Flex justifyContent={"center"} alignItems={"center"} color={"black"} bgColor={"#FCFCFC"} h={"full"} w={"full"} position={"relative"} >
@@ -44,7 +51,7 @@ export default function AuthPage() {
                     <Text onClick={() => router.push("/auth/forgot")} cursor={"pointer"} fontWeight={"600"} color={"#233DF3"} >Forgot Password</Text>
                 </Flex> 
                 <CustomButton isLoading={signInPending} onClick={()=> formik.handleSubmit()} borderRadius={"9999px"} mt={"4"} height={"50px"} text={"Login"} />
-                <Text fontSize={"14px"} mt={"4"} cursor={"pointer"} >{`Don't have account ?`} <span style={{ color: "#233DF3", fontWeight: "600" }} role='button' onClick={() => router?.push("/auth/signup")} >Sign Up</span></Text>
+                <Text fontSize={"14px"} mt={"4"} cursor={"pointer"} >{`Don't have account ?`} <span style={{ color: "#233DF3", fontWeight: "600" }} role='button' onClick={clickHandler} >Sign Up</span></Text>
             </Flex>
         </Flex>
     )
