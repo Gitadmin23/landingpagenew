@@ -99,7 +99,7 @@ const useAuth = () => {
             if (pathname?.includes("forgot")) {
                 router.replace(`/auth/forgot?code=${code}`)
             } else {
-                router.replace(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `&create=${create}` : ""}`)
+                router.replace(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)
             }
         }
     });
