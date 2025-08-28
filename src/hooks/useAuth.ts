@@ -49,7 +49,7 @@ const useAuth = () => {
  
             if(productId) {
                 window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
-            } else if(create !== "event" && create !== "fundraiser") {
+            } else if(create !== "event" && create !== "fundraiser" && create) {
                 window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${data?.data?.access_token}`;
             } else { 
                 // Pass the token to App B through URL
