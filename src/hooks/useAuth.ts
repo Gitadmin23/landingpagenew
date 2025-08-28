@@ -123,7 +123,7 @@ const useAuth = () => {
                 closable: true
             })
             if (pathname?.includes("forgot")) {
-                router.push(`/auth/forgot?email=${formikEmail?.values?.email}${create ? `&create=${create}` : ""}`)
+                router.push(`/auth/forgot?email=${formikEmail?.values?.email}${create ? `&create=${create}` : ""}${eventId ? `&eventId=${eventId}` : ""}${productId ? `&productId=${productId}` : ""}`)
             }
             setStartTimer(true)
             setInitialTime(59)
@@ -146,7 +146,7 @@ const useAuth = () => {
                 type: "success",
                 closable: true
             })
-            router.push('/auth');
+            router.push(`/auth${create ? `?create=${create}` : ""}${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}`);
         }
     });
 
