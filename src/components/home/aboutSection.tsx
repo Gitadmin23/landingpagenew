@@ -116,7 +116,7 @@ export default function AboutEventSection() {
                         </Flex>
                     </Flex>
                 </Flex>
-                <CustomButton onClick={() => push("/auth/signup")} text={"Sign Up now for free"} px={"5"} width={"fit-content"} fontSize={"14px"} mt={"3"} borderRadius={"999px"} />
+                <CustomButton onClick={() => push("/auth?create=event")} text={"Create An Event"} px={"5"} width={"fit-content"} fontSize={"14px"} mt={"3"} borderRadius={"999px"} />
             </Flex>
         </Flex>
     )

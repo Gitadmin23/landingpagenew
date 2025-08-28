@@ -16,6 +16,7 @@ const useGoogle = () => {
     const query = useSearchParams();
     const eventId = query?.get('eventId');
     const productId = query?.get('productId');
+    const create = query?.get('create');
 
     const { mutate: signInWithGoogle, isPending: signInPending } = useMutation({
         mutationFn: (googleToken: string) =>
@@ -80,8 +81,10 @@ const useGoogle = () => {
             } else { 
                 if (productId) {
                     window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
-                } else {
-                    window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}${eventId ? `&eventId=${eventId}` : ""}`);
+                } else if(create !== "event" && create !== "fundraiser") {
+                    window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId}?token=${data?.data?.access_token}`;
+                }else {
+                    window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`);
                 }
                 // window.location.href = `${EVENT_PAGE_URL}?token=${access_Token}`;
                 // Optional: redirect or load user profile

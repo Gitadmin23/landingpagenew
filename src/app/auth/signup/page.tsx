@@ -17,9 +17,10 @@ export default function Signup() {
 
     const eventId = query?.get('eventId');
     const productId = query?.get('productId');
+    const create = query?.get('create');
 
     const clickHandler = () => {
-        router?.push(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}`)
+        router?.push(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)
     }
 
     return (

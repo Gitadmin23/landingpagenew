@@ -3,6 +3,7 @@ import { Flex, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { CustomButton } from "../shared";
 
 export default function GetThingDone() {
 
@@ -76,7 +77,8 @@ export default function GetThingDone() {
                 <Flex onClick={() => scroll(400)} cursor={"pointer"} w={"40px"} h={"40px"} pl={"1"} justifyContent={"center"} alignItems={"center"} rounded={"full"} borderWidth={"1px"} borderColor={"white"} >
                     <IoChevronForward size={"20px"} />
                 </Flex>
-            </Flex>
+            </Flex> 
+            <CustomButton onClick={() => push("/auth?create=event")} text={"Create An Event"} px={"5"} width={"fit-content"} fontSize={"14px"} mt={"3"} pos={"relative"} zIndex={"20"} borderRadius={"999px"} />
         </Flex>
     )
 }

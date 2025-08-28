@@ -16,9 +16,10 @@ export default function AuthPage() {
     const query = useSearchParams(); 
     const eventId = query?.get('eventId');
     const productId = query?.get('productId'); 
+    const create = query?.get('create');
 
     const clickHandler = () => {
-        router?.push(`/auth/signup${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}`)
+        router?.push(`/auth/signup${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)
     }
 
     return (
@@ -48,7 +49,7 @@ export default function AuthPage() {
                         <Checkbox.Control />
                         <Checkbox.Label>Remember me</Checkbox.Label>
                     </Checkbox.Root>
-                    <Text onClick={() => router.push("/auth/forgot")} cursor={"pointer"} fontWeight={"600"} color={"#233DF3"} >Forgot Password</Text>
+                    <Text onClick={() => router.push(`/auth/forgot${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)} cursor={"pointer"} fontWeight={"600"} color={"#233DF3"} >Forgot Password</Text>
                 </Flex> 
                 <CustomButton isLoading={signInPending} onClick={()=> formik.handleSubmit()} borderRadius={"9999px"} mt={"4"} height={"50px"} text={"Login"} />
                 <Text fontSize={"14px"} mt={"4"} cursor={"pointer"} >{`Don't have account ?`} <span style={{ color: "#233DF3", fontWeight: "600" }} role='button' onClick={clickHandler} >Sign Up</span></Text>

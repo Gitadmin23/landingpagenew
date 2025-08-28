@@ -19,6 +19,7 @@ const useAuth = () => {
     const codequery = query?.get('code');
     const eventId = query?.get('eventId');
     const productId = query?.get('productId'); 
+    const create = query?.get('create');
 
     const pathname = usePathname()
 
@@ -48,9 +49,11 @@ const useAuth = () => {
  
             if(productId) {
                 window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
+            } else if(create !== "event" && create !== "fundraiser") {
+                window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${data?.data?.access_token}`;
             } else { 
                 // Pass the token to App B through URL
-                window.location.href = `${EVENT_PAGE_URL}?token=${data?.data?.access_token}${eventId ? `&eventId=${eventId}` : ""}`;
+                window.location.href = `${EVENT_PAGE_URL}?token=${data?.data?.access_token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`;
             }
 
         },
@@ -72,7 +75,7 @@ const useAuth = () => {
                 type: "success",
                 closable: true
             })
-            router.push(`/auth/signup?email=${formikSignUp.values.email}${eventId ? `&eventId=${eventId}` : ""}${productId ? `&productId=${productId}` : ""}`)
+            router.push(`/auth/signup?email=${formikSignUp.values.email}${eventId ? `&eventId=${eventId}` : ""}${productId ? `&productId=${productId}` : ""}${create ? `&create=${create}` : ""}`)
         },
     });
 
@@ -96,7 +99,7 @@ const useAuth = () => {
             if (pathname?.includes("forgot")) {
                 router.replace(`/auth/forgot?code=${code}`)
             } else {
-                router.replace(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}`)
+                router.replace(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `&create=${create}` : ""}`)
             }
         }
     });
@@ -120,7 +123,7 @@ const useAuth = () => {
                 closable: true
             })
             if (pathname?.includes("forgot")) {
-                router.push(`/auth/forgot?email=${formikEmail?.values?.email}}`)
+                router.push(`/auth/forgot?email=${formikEmail?.values?.email}${create ? `&create=${create}` : ""}`)
             }
             setStartTimer(true)
             setInitialTime(59)
