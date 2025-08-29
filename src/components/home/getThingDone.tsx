@@ -78,7 +78,7 @@ export default function GetThingDone() {
                     <IoChevronForward size={"20px"} />
                 </Flex>
             </Flex> 
-            <CustomButton onClick={() => push("/auth?create=event")} text={"Create An Event"} px={"5"} width={"fit-content"} fontSize={"14px"} mt={"3"} pos={"relative"} zIndex={"20"} borderRadius={"999px"} />
+            <CustomButton onClick={() => push("/auth?create=services")} text={"Browse Professional "} px={"5"} width={"fit-content"} fontSize={"14px"} mt={"3"} pos={"relative"} zIndex={"20"} borderRadius={"999px"} />
         </Flex>
     )
 }
