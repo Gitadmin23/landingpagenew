@@ -216,7 +216,7 @@ export default function UserComment() {
 
     return (
         <Flex w={"full"} flexDir={"column"} bgColor={"white"} pt={["8", "8", "12"]} pb={["4", "4", "12"]} gap={"9"} >
-            <Text fontSize={["32px", "32px", "48px"]} lineHeight={"120%"} fontWeight={"700"} px={["3", "3", "12"]} >Customer Review</Text>
+            <Text fontSize={["24px", "24px", "32px"]} lineHeight={"120%"} fontWeight={"700"} px={["3", "3", "12"]} >Customer Reviews</Text>
             <Flex ref={ref} w={"full"} overflowX={"auto"} h={"fit-content"} px={["3", "3", "12"]} scrollBehavior={"smooth"} className="hide-scrollbar" >
                 <Flex w={"auto"} gap={"3"} >
                     {data?.map((item: IProps, index: number) => {
