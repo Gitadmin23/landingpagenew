@@ -13,7 +13,7 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: "Chasescroll",
-  description: 'Discover. Connect. Elevate Your Events as new wording',
+  description: 'Discover. Connect. Elevate Your Events',
   manifest: '/manifest.json',
   applicationName: 'Chasescroll'
 }; 
