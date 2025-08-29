@@ -92,7 +92,7 @@ function HomeNavbar(
                     <Image width={["32px", "32px", "60px"]} src={"/assets/logo.png"} alt="logo" />
                     <Flex flexDir={"column"} alignItems={"start"} >
                         <Text fontWeight={"bold"} fontSize={["14px", "14px", "16px"]} color={pathname?.includes("term") ? primaryColor : (yaxis === 0) ? "white" : primaryColor} >Chasescroll</Text>
-                        <Text fontWeight={"medium"} fontStyle={"italic"} fontSize={["12px", "12px", "14px"]}>We build memories.</Text>
+                        <Text fontWeight={"medium"} fontStyle={"italic"} fontSize={["12px", "12px", "14px"]}>Discover. Connect. Elevate Your Events as new wording</Text>
                     </Flex>
                 </Flex>
                 <Flex h={"56px"} display={["none", "none", "none", "none", "flex"]} alignItems={"center"} px={"6"} rounded={"full"} style={{ background: yaxis === 0 ? "linear-gradient(265.89deg, rgba(0, 0, 0, 0) 18.07%, rgba(0, 0, 0, 0.1) 86.4%)" : "white" }} gap={"8"} >
