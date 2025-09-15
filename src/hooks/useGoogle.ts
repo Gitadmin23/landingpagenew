@@ -80,9 +80,9 @@ const useGoogle = () => {
 
             } else { 
                 if (productId) {
-                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
+                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${access_Token}`;
                 } else if(create !== "event" && create !== "fundraiser" && create) {
-                    window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${data?.data?.access_token}`;
+                    window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${access_Token}`;
                 } else {
                     window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`);
                 }
@@ -109,8 +109,14 @@ const useGoogle = () => {
                 type: "success",
                 closable: true,
             });
-
-            window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}`);
+            if (productId) {
+                window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${access_Token}`;
+            } else if(create !== "event" && create !== "fundraiser" && create) {
+                window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${access_Token}`;
+            } else {
+                window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`);
+            }
+            // window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}`);
         },
         onError: () => {
 
