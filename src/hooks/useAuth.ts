@@ -59,7 +59,6 @@ const useAuth = () => {
         },
     });
 
-
     const { mutate: signUp, isPending: signupPending, isSuccess: signupSuccess } = useMutation({
         mutationFn: (data: any) => unsecureHttpService.post(`${URLS.SIGNUP}`, data),
         onError: (error: any) => {
@@ -78,7 +77,6 @@ const useAuth = () => {
             router.push(`/auth/signup?email=${formikSignUp.values.email}${eventId ? `&eventId=${eventId}` : ""}${productId ? `&productId=${productId}` : ""}${create ? `&create=${create}` : ""}`)
         },
     });
-
 
     const { mutate: verifyToken, isPending: loadingVerify, } = useMutation({
         mutationFn: (data: { token: string }) => unsecureHttpService.post(`${URLS.VERIFY_TOKEN}`, data),
@@ -207,8 +205,6 @@ const useAuth = () => {
             })
         },
     });
-
-
 
     const formikEmail = useFormik({
         initialValues: {

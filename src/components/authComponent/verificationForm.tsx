@@ -1,5 +1,5 @@
 import { Button, Flex, PinInput, Text } from "@chakra-ui/react";
-import { ModalLayout } from "../shared";
+import { CustomButton, ModalLayout } from "../shared";
 import { usePathname, useSearchParams } from "next/navigation";
 import { FaCircleInfo } from "react-icons/fa6";
 import { useEffect, useState } from "react";
@@ -83,9 +83,9 @@ export default function VerficationForm(
                         <Button disabled={sendingVerify} h={"fit-content"} loading={sendingVerify} bg={"transparent"} _hover={{ backgroundColor: "transparent" }} color={"#233DF3"} onClick={() => sendVerify(email as string)}  >Resend</Button >
                     </Flex>
                 )}
-                <Button onClick={() => verifyToken({ token: code })} color={"white"} loading={loadingVerify} disabled={loadingVerify || code.length !== 6} h={"50px"} w={"full"} bgColor={"#233DF3"} rounded={"full"} gap={"3"} _hover={{ backgroundColor: "#233DF3" }} justifyContent={"center"} alignItems={"center"} >
-                    <Text textAlign={"center"} fontWeight={"600"} >Verify</Text>
-                </Button>
+                <CustomButton text={"Verify"} onClick={() => verifyToken({ token: code })} color={"white"} isLoading={loadingVerify} disabled={loadingVerify || code.length !== 6} h={"50px"} w={"full"} bgColor={"#233DF3"} rounded={"full"} gap={"3"} _hover={{ backgroundColor: "#233DF3" }} justifyContent={"center"} alignItems={"center"} >
+                    {/* <Text textAlign={"center"} fontWeight={"600"} >Verify</Text> */}
+                </CustomButton>
             </Flex>
         </ModalLayout>
     )

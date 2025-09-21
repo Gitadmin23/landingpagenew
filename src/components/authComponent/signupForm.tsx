@@ -91,7 +91,7 @@ export default function SignUpForm(
                                 </span>
                             </Link>
                             </Text>
-                            <CustomButton text={"Submit"} mt={"4"} loading={signupPending} onClick={() => formik.handleSubmit()} borderRadius={"999px"} />
+                            <CustomButton text={"Submit"} mt={"4"} isLoading={signupPending} onClick={() => formik.handleSubmit()} borderRadius={"999px"} />
                         </Flex>
                     )}
                 </Flex>
