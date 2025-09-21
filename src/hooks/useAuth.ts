@@ -15,10 +15,11 @@ const useAuth = () => {
     const [initialTime, setInitialTime] = useState(0);
     const [startTimer, setStartTimer] = useState(false);
     const [code, setCode] = useState("");
+    const [open, setOpen] = useState(false);
     const query = useSearchParams();
     const codequery = query?.get('code');
     const eventId = query?.get('eventId');
-    const productId = query?.get('productId'); 
+    const productId = query?.get('productId');
     const create = query?.get('create');
 
     const pathname = usePathname()
@@ -35,26 +36,35 @@ const useAuth = () => {
         },
         onSuccess: (data: any) => {
 
-            toaster.create({
-                title: `Success`,
-                description: "Login Successful",
-                type: "success",
-                closable: true
-            })
-            Cookies.set("chase_token", data?.data?.access_token, {
-                path: "/",
-                secure: true,
-                sameSite: "Lax",
-            });
- 
-            if(productId) {
-                window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
-            } else if(create !== "event" && create !== "fundraiser" && create) {
-                window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${data?.data?.access_token}`;
-            } else { 
-                // Pass the token to App B through URL
-                window.location.href = `${EVENT_PAGE_URL}?token=${data?.data?.access_token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`;
+
+            if (data?.data?.localizedMessage === "This email is not verified") {
+                setOpen(true)
+            } else {
+                toaster.create({
+                    title: `Success`,
+                    description: "Login Successful",
+                    type: "success",
+                    closable: true
+                })
+                Cookies.set("chase_token", data?.data?.access_token, {
+                    path: "/",
+                    secure: true,
+                    sameSite: "Lax",
+                });
+
+                if(productId) {
+                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
+                } else if(create !== "event" && create !== "fundraiser" && create) {
+                    window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${data?.data?.access_token}`;
+                } else { 
+                    // Pass the token to App B through URL
+                    window.location.href = `${EVENT_PAGE_URL}?token=${data?.data?.access_token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`;
+                }
             }
+
+
+            console.log(data?.data?.localizedMessage);
+
 
         },
     });
@@ -74,11 +84,14 @@ const useAuth = () => {
                 type: "success",
                 closable: true
             })
+
+            console.log(data);
+
             router.push(`/auth/signup?email=${formikSignUp.values.email}${eventId ? `&eventId=${eventId}` : ""}${productId ? `&productId=${productId}` : ""}${create ? `&create=${create}` : ""}`)
         },
     });
 
-    const { mutate: verifyToken, isPending: loadingVerify, } = useMutation({
+    const { mutate: verifyToken, isPending: loadingVerify, isSuccess } = useMutation({
         mutationFn: (data: { token: string }) => unsecureHttpService.post(`${URLS.VERIFY_TOKEN}`, data),
         onError: (error: any) => {
             toaster.create({
@@ -99,6 +112,7 @@ const useAuth = () => {
             } else {
                 router.replace(`/auth${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)
             }
+            setOpen(false)
         }
     });
 
@@ -201,7 +215,7 @@ const useAuth = () => {
                         "objectPublic": true,
                         "value": data?.phone
                     }
-                }  
+                }
             })
         },
     });
@@ -261,7 +275,10 @@ const useAuth = () => {
         formikPassword,
         setCode,
         code,
-        loadingPassword
+        open,
+        setOpen,
+        loadingPassword,
+        isSuccess
     }
 
 }

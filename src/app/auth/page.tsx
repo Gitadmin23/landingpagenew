@@ -8,14 +8,15 @@ import { Flex } from "@chakra-ui/react";
 import { CustomButton, CustomInput, GoogleBtn } from "@/components/shared";
 import useAuth from "@/hooks/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
+import VerficationForm from "@/components/authComponent/verificationForm";
 
 export default function AuthPage() {
 
-    const { signInPending, formik } = useAuth()
+    const { signInPending, formik, open, setOpen } = useAuth()
     const router = useRouter()
-    const query = useSearchParams(); 
+    const query = useSearchParams();
     const eventId = query?.get('eventId');
-    const productId = query?.get('productId'); 
+    const productId = query?.get('productId');
     const create = query?.get('create');
 
     const clickHandler = () => {
@@ -28,32 +29,36 @@ export default function AuthPage() {
                 <IoIosArrowBack size={"20px"} />
                 Home
             </Flex>
-            <Flex style={{ boxShadow: "0px 2px 8px 2px #00000003" }} flexDir={"column"} gap={"1"} justifyContent={"center"} alignItems={"center"} maxW={"450px"} p={"8"} rounded={"62px"} w={"full"} >
-                <Image alt='logo' src='/images/logo.png' />
-                <Text fontSize={"24px"} color={"#1F1F1F"} textAlign={"center"} fontWeight={"600"} >Welcome To Chasescroll</Text>
-                <Text fontSize={"14px"} color={"#5C5C5C"} textAlign={"center"} fontWeight={"500"} >{`We're thrilled to work with you on your event projects. Join us today.`}</Text>
-                <GoogleBtn title="Sign in" />
-                <Flex mt={"2"} flexDirection={"column"} pos={"relative"} alignItems={"center"} >
-                    <Box maxW={"400px"} w={"70vw"} height={"1px"} pos={"absolute"} top={"3"} bgColor={"#BCBCBC"} />
-                    <Text px={"2"} bg={"white"} pos={"relative"} color={"#BCBCBC"} zIndex={"10"} >OR</Text>
+            <form onSubmit={formik.handleSubmit} > 
+                <Flex style={{ boxShadow: "0px 2px 8px 2px #00000003" }} flexDir={"column"} gap={"1"} justifyContent={"center"} alignItems={"center"} maxW={"450px"} p={"8"} rounded={"62px"} w={"full"} >
+                    <Image alt='logo' src='/images/logo.png' />
+                    <Text fontSize={"24px"} color={"#1F1F1F"} textAlign={"center"} fontWeight={"600"} >Welcome To Chasescroll</Text>
+                    <Text fontSize={"14px"} color={"#5C5C5C"} textAlign={"center"} fontWeight={"500"} >{`We're thrilled to work with you on your event projects. Join us today.`}</Text>
+                    <GoogleBtn title="Sign in" />
+                    <Flex mt={"2"} flexDirection={"column"} pos={"relative"} alignItems={"center"} >
+                        <Box maxW={"400px"} w={"70vw"} height={"1px"} pos={"absolute"} top={"3"} bgColor={"#BCBCBC"} />
+                        <Text px={"2"} bg={"white"} pos={"relative"} color={"#BCBCBC"} zIndex={"10"} >OR</Text>
+                    </Flex>
+                    <Flex flexDir={"column"} gap={"1"} mt={"4"} w={"full"} >
+                        <CustomInput label="Email/Username" name='username' type='text' placeholder='Enter your Email or Username' value={formik?.values} setValue={formik?.setFieldValue} />
+                    </Flex>
+                    <Flex flexDir={"column"} gap={"1"} mt={"3"} w={"full"} >
+                        <CustomInput isPassword={true} label="Password" name='password' type='password' placeholder='Enter your password' value={formik?.values} setValue={formik?.setFieldValue} />
+                    </Flex>
+                    <Flex justifyContent={"space-between"} w={"full"} mt={"3"} fontSize={"12px"} >
+                        <Checkbox.Root variant={"solid"} size={"sm"} color={"#233DF3"} >
+                            <Checkbox.HiddenInput />
+                            <Checkbox.Control />
+                            <Checkbox.Label>Remember me</Checkbox.Label>
+                        </Checkbox.Root>
+                        <Text onClick={() => router.push(`/auth/forgot${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)} cursor={"pointer"} fontWeight={"600"} color={"#233DF3"} >Forgot Password</Text>
+                    </Flex>
+                    <CustomButton isLoading={signInPending} type="submit" borderRadius={"9999px"} mt={"4"} height={"50px"} text={"Login"} />
+                    <Text fontSize={"14px"} mt={"4"} cursor={"pointer"} >{`Don't have account ?`} <span style={{ color: "#233DF3", fontWeight: "600" }} role='button' onClick={clickHandler} >Sign Up</span></Text>
                 </Flex>
-                <Flex flexDir={"column"} gap={"1"} mt={"4"} w={"full"} > 
-                    <CustomInput label="Email/Username" name='username' type='text' placeholder='Enter your Email or Username' value={formik?.values} setValue={formik?.setFieldValue} />
-                </Flex>
-                <Flex flexDir={"column"} gap={"1"} mt={"3"} w={"full"} > 
-                    <CustomInput isPassword={true} label="Password" name='password' type='password' placeholder='Enter your password' value={formik?.values} setValue={formik?.setFieldValue} />
-                </Flex>
-                <Flex justifyContent={"space-between"} w={"full"} mt={"3"} fontSize={"12px"} > 
-                    <Checkbox.Root variant={"solid"} size={"sm"} color={"#233DF3"} >
-                        <Checkbox.HiddenInput />
-                        <Checkbox.Control />
-                        <Checkbox.Label>Remember me</Checkbox.Label>
-                    </Checkbox.Root>
-                    <Text onClick={() => router.push(`/auth/forgot${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)} cursor={"pointer"} fontWeight={"600"} color={"#233DF3"} >Forgot Password</Text>
-                </Flex> 
-                <CustomButton isLoading={signInPending} onClick={()=> formik.handleSubmit()} borderRadius={"9999px"} mt={"4"} height={"50px"} text={"Login"} />
-                <Text fontSize={"14px"} mt={"4"} cursor={"pointer"} >{`Don't have account ?`} <span style={{ color: "#233DF3", fontWeight: "600" }} role='button' onClick={clickHandler} >Sign Up</span></Text>
-            </Flex>
+            </form>
+
+            <VerficationForm open={open} setOpen={setOpen} />
         </Flex>
     )
 }

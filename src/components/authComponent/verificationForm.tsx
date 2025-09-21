@@ -24,7 +24,7 @@ export default function VerficationForm(
 
     const pathname = usePathname()
 
-    const { initialTime, setInitialTime, startTimer, setStartTimer, sendingVerify, sendVerify, loadingVerify, verifyToken, setCode, code } = useAuth()
+    const { initialTime, setInitialTime, startTimer, setStartTimer, sendingVerify, sendVerify, loadingVerify, verifyToken, setCode, code, isSuccess } = useAuth()
 
     useEffect(() => {
         if (initialTime > 0) {
@@ -49,6 +49,12 @@ export default function VerficationForm(
             setOpen(false)
         }
     }, [email, codequery])
+
+    useEffect(()=> {
+        if(isSuccess){
+            setOpen(false)
+        }
+     }, [isSuccess])
 
     return (
         <ModalLayout open={open} size={"xs"} trigger={true} close={() => setOpen(true)} >
