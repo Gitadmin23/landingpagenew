@@ -4,8 +4,7 @@ import { NewDonationIcon, NewEventIcon, RentalIcon, ServiceIcon, StoreIcon } fro
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
 import { useInView } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import React, { useRef, useState } from 'react'
-import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
+import React, { useRef, useState } from 'react' 
 import { CustomButton } from '../shared';
 
 export default function HeroSection() {
@@ -16,9 +15,7 @@ export default function HeroSection() {
     const reftwo: any = useRef(null);
     const isInViewtwo = useInView(ref, { once: true });
 
-    const [active, setActive] = useState("")
-
-    const [open, setOpen] = useState(false)
+    const [active, setActive] = useState("") 
 
     const { primaryColor, borderColor } = useCustomTheme()
     const { push } = useRouter()
@@ -139,7 +136,7 @@ export default function HeroSection() {
                     </Flex>
                     <Image src='/images/hero/brandlogo.png' alt='brand' ml={"4"} />
                 </Flex>
-                <Flex pos={["relative", "absolute"]} ml={"auto"} mt={"150px"} display={["none", "none","flex"]} zIndex={"10"} bottom={"36"} right={"0px"} >
+                <Flex pos={["relative", "absolute"]} ml={"auto"} mt={"150px"} display={["none", "none","flex"]} zIndex={"10"} bottom={"10%"} right={"0px"} >
                     <Flex flexDir={"column"} gap={"3"} zIndex={"10"} alignItems={"center"} >
                         <Image w={"250px"} src='/images/newlink.png' alt='newlink' />
                         <Text maxW={"379px"} textAlign={"center"} >Chasescroll is the official ticketing partner for LinkedIn  local Nigeria events</Text>
