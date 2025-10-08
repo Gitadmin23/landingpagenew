@@ -34,7 +34,7 @@ export default function HeroSection() {
     }
 
     return (
-        <Flex w={"full"} h={"100vh"} color={"white"} pos={"relative"} >
+        <Flex w={"full"} h={[ "100vh"]} color={"white"} pos={"relative"} >
             <Flex pos={"absolute"} inset={"0px"} zIndex={"10"} style={{ background: "linear-gradient(116.54deg, rgba(84, 101, 224, 0) -7.35%, rgba(35, 61, 243, 0.2) 41.22%), linear-gradient(228.39deg, rgba(0, 0, 0, 0) -57.53%, rgba(0, 0, 0, 0.4) 90.44%), linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))" }} />
             <Image src='/images/hero/hero.png' alt='hero' w={"full"} objectFit={"cover"} />
             <Flex pos={"absolute"} insetX={"0px"} bottom={"0px"} top={["64px", "64px", "101.03px"]} gap={"8"} px={["6", "6", "16"]} flexDirection={"column"} justifyContent={"center"} zIndex={"20"} >
@@ -52,7 +52,7 @@ export default function HeroSection() {
                         opacity: isInViewtwo ? 1 : 0,
                         transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
                         background: "linear-gradient(115.13deg, rgba(35, 61, 243, 0.2) 20.26%, rgba(21, 35, 141, 0.2) 65.99%), linear-gradient(265.89deg, rgba(0, 0, 0, 0) 18.07%, rgba(0, 0, 0, 0.6) 86.4%)"
-                    }} maxW={"833px"} px={["3", "3", "10"]} py={["6", "6", "10"]} rounded={"32px"} flexDir={"column"} alignItems={"center"} gap={"8"} >
+                    }} maxW={"833px"} px={["3", "3", "10"]} py={["6", "6", "10"]} rounded={"32px"} flexDir={"column"} alignItems={"center"} gap={"8"} zIndex={"15"} >
                     <Flex w={["full", "fit-content", "fit-content"]} gap={["3", "3", "0px"]} justifyContent={"space-around"} alignItems={"center"} bgColor={"white"} p={"6px"} rounded={"full"} >
                         <CustomButton onMouseOver={() => setActive("event")} onMouseOut={() => setActive("")} onClick={() => clickHandler("event")} text={
                             <Flex alignItems={"center"} gap={"2"} >
@@ -87,14 +87,14 @@ export default function HeroSection() {
                             </Flex>
                         } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "kiosk" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "kiosk" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
                         {/* <Flex w="fit-content" display={["none", "none", "flex"]} > */}
-                            <CustomButton onMouseOver={() => setActive("fundraising")} onMouseOut={() => setActive("")} onClick={() => clickHandler("donation")} text={
-                                <Flex alignItems={"center"} gap={"2"} >
-                                    <Flex display={["none", "none", "flex"]} >
-                                        <NewDonationIcon color={active === "fundraising" ? "white" : "black"} />
-                                    </Flex>
-                                    <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
+                        <CustomButton onMouseOver={() => setActive("fundraising")} onMouseOut={() => setActive("")} onClick={() => clickHandler("donation")} text={
+                            <Flex alignItems={"center"} gap={"2"} >
+                                <Flex display={["none", "none", "flex"]} >
+                                    <NewDonationIcon color={active === "fundraising" ? "white" : "black"} />
                                 </Flex>
-                            } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "fundraising" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "fundraising" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
+                                <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
+                            </Flex>
+                        } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "fundraising" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "fundraising" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
                         {/* </Flex> */}
                         {/* <Flex w={"fit-content"} position={"relative"} >
 
@@ -138,6 +138,25 @@ export default function HeroSection() {
                         </Button>
                     </Flex>
                     <Image src='/images/hero/brandlogo.png' alt='brand' ml={"4"} />
+                </Flex>
+                <Flex pos={["relative", "absolute"]} ml={"auto"} mt={"150px"} display={["none", "none","flex"]} zIndex={"10"} bottom={"36"} right={"0px"} >
+                    <Flex flexDir={"column"} gap={"3"} zIndex={"10"} alignItems={"center"} >
+                        <Image w={"250px"} src='/images/newlink.png' alt='newlink' />
+                        <Text maxW={"379px"} textAlign={"center"} >Chasescroll is the official ticketing partner for LinkedIn  local Nigeria events</Text>
+                    </Flex>
+                    <Flex h={"59px"} ml={"-120px"} mr={"-50px"} mt={"12"} transform="rotate(-10deg)" w={"200px"} bgColor={"#5465E0"} >
+
+                    </Flex>
+                </Flex>
+
+                <Flex pos={["relative"]} ml={"auto"} display={["flex", "none", "none"]} zIndex={"10"} right={"0px"} >
+                    <Flex flexDir={"column"} gap={"3"} zIndex={"10"} alignItems={"center"} >
+                        <Image w={"150px"} src='/images/newlink.png' alt='newlink' />
+                        <Text maxW={"223px"} fontSize={"10px"} p={"3"} style={{background: "linear-gradient(268.4deg, rgba(35, 61, 243, 0.05) -140.32%, rgba(21, 35, 141, 0.05) -40.12%), linear-gradient(240.97deg, rgba(0, 0, 0, 0) 18.59%, rgba(0, 0, 0, 0.2) 261.49%)"}} textAlign={"center"} >Chasescroll is the official ticketing partner for LinkedIn  local Nigeria events</Text>
+                    </Flex>
+                    <Flex h={"35px"} ml={"-120px"} mr={"-50px"} mt={"9"} transform="rotate(-10deg)" w={"200px"} bgColor={"#5465E0"} >
+
+                    </Flex>
                 </Flex>
             </Flex>
         </Flex>
