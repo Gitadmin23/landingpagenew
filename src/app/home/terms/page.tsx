@@ -3,8 +3,7 @@ import { CustomButton } from '@/components/shared'
 import { termsandCondition } from '@/helpers/terms'
 import useCustomTheme from '@/hooks/useTheme'
 import { Flex, Text, Box } from '@chakra-ui/react'
-import { useRouter } from 'next/navigation'
-import React from 'react'
+import { useRouter } from 'next/navigation' 
 
 export default function Page() { 
 

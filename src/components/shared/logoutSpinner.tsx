@@ -1,5 +1,5 @@
 "use client"
-import { Flex, Spinner } from "@chakra-ui/react"; 
+import { Flex } from "@chakra-ui/react"; 
 import { useEffect } from "react";
 import Cookies from "js-cookie"
 import ModalLayout from "./modalLayout";

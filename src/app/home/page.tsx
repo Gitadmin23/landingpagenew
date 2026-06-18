@@ -1,8 +1,7 @@
 "use client"    
 import Faq from "@/components/home/FAQ"
 import { GetThingDone, HeroSection, AboutEventSection, EventOrganiserSection, ProfessionService, UserComment, ServiceProvider } from "@/components/home"  
-import { Flex } from "@chakra-ui/react"
-import React from "react"  
+import { Flex } from "@chakra-ui/react" 
 
 export default function Home() {
     return ( 
