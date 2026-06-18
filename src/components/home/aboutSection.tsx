@@ -3,7 +3,7 @@ import useCustomTheme from '@/hooks/useTheme'
 import { Flex, Text } from '@chakra-ui/react'
 import { useInView } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import React, { useRef } from 'react' 
+import { useRef } from 'react' 
 import { CustomButton } from '../shared'
 import { GreenTickTwo } from '@/svg' 
 import YouTube from 'react-youtube';
@@ -28,7 +28,6 @@ export default function AboutEventSection() {
         height: '330',
         width: '512',
         playerVars: {
-            // https://developers.google.com/youtube/player_parameters
             autoplay: 0,
         },
         control: false
@@ -38,7 +37,6 @@ export default function AboutEventSection() {
         height: '220',
         width: '320',
         playerVars: {
-            // https://developers.google.com/youtube/player_parameters
             autoplay: 0,
         },
     };
@@ -59,7 +57,7 @@ export default function AboutEventSection() {
                 </Flex>
             </Flex>
         )
-    }
+    } 
 
     return (
         <Flex ref={ref} w={"full"} gap={"6"} px={["6", "6", "16"]} py={["6", "6", "14"]} flexDir={["column", "column", "row"]} bg={"white"} alignItems={"center"} >
@@ -74,7 +72,7 @@ export default function AboutEventSection() {
                 <Flex w={"full"} h={["300px", "440px", "440px"]} rounded={"2xl"} >
                     <Flex w={"full"} h={"full"} rounded={"2xl"} px={"2"} bgColor={"#F2F7F1"} justifyContent={"center"} alignItems={"center"} >
                         {/* <Image src="/images/aboutplatform.png" alt='hometo' objectFit={"cover"} h={["full", "full"]} /> */}
-                        <Video url='drGoYkoIfh4' />
+                        <Video url='jQz3p1z9OLQ' />
                     </Flex>
                 </Flex>
             </Flex>

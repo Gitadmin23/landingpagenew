@@ -3,6 +3,7 @@ import { GreenTickTwo } from '@/svg';
 import { Flex, Image, Text } from '@chakra-ui/react'
 import { useInView } from 'framer-motion';
 import React, { useRef } from 'react'
+import { CustomVideo } from '../shared';
 
 export default function EventOrganiser() {
 
@@ -71,16 +72,20 @@ export default function EventOrganiser() {
                         </Flex>
                     </Flex>
                 </Flex>
-            </Flex>
-            <Flex
+            </Flex> 
+            <Flex 
                 ref={reftwo}
                 style={{
-                    transform: isInViewtwo ? "none" : "translateX(+150px)",
-                    opacity: isInViewtwo ? 1 : 0,
+                    transform: isInView ? "none" : "translateX(+150px)",
+                    opacity: isInView ? 1 : 0,
                     transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
-                }} w={["full", "full", "fit-content"]} >
-                <Flex w={["full", "full", "505px"]} h={["322px", "322px", "440px"]} bgColor={"#F2F7F280"} justifyContent={"center"} alignItems={"end"} rounded={"2xl"}  >
-                    <Image src='/images/hero/eventPage.png' alt='fund' w={"60%"} h={["80%"]} mt={"auto"} ml={"8"} objectFit={"contain"} rounded={["12px", "12px", "32px"]} objectPosition={["center"]} />
+                }}
+                w={["full", "full", "fit-content"]} >
+                <Flex w={"full"} h={["300px", "440px", "440px"]} rounded={"2xl"} >
+                    <Flex w={"full"} h={"full"} rounded={"2xl"} px={"2"} bgColor={"#F2F7F1"} justifyContent={"center"} alignItems={"center"} >
+                        {/* <Image src="/images/aboutplatform.png" alt='hometo' objectFit={"cover"} h={["full", "full"]} /> */}
+                        <CustomVideo url='nPtY0-WgUgo' />
+                    </Flex>
                 </Flex>
             </Flex>
         </Flex>
