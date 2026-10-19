@@ -1,7 +1,7 @@
 "use client"
 import { Box, Button, Drawer, Menu, Flex, Image, Portal, Text, CloseButton } from "@chakra-ui/react";
 import React from "react";
-import { usePathname, useRouter } from "next/navigation"; 
+import { usePathname, useRouter } from "next/navigation";
 import { HambergerMenu } from "iconsax-react";
 import { NewDonationIcon, NewEventIcon, RentalIcon, ServiceIcon, StoreIcon } from "../../svg";
 import { SidebarHomeIcon } from "../../svg/sidebarIcons";
@@ -68,7 +68,7 @@ function HomeNavbar(
             link: "/home/contact-us"
         }
     ]
- 
+
     const token = ""
 
     const pathname = usePathname();
@@ -79,7 +79,7 @@ function HomeNavbar(
     const clickHandler = (item: string) => {
         router?.push(item)
         // onClose()
-    } 
+    }
 
     return (
         <>
@@ -87,11 +87,11 @@ function HomeNavbar(
             <Flex
                 style={{
                     backgroundColor: (yaxis === 0) ? "transparent" : "white",
-                }} w={"full"} position={"fixed"} zIndex={"100"} top={"0px"} color={pathname?.includes("term") ? "black" : (yaxis === 0) ? "white" : "black"} height={["64px", "64px", "101.03px"]} px={["6", "6", "12"]} justifyContent={"space-between"} alignItems={"center"}  >
+                }} w={"full"} position={"fixed"} zIndex={"100"} top={"0px"} color={(pathname?.includes("term") || pathname?.includes("privacy")) ? "black" : (yaxis === 0) ? "white" : "black"} height={["64px", "64px", "101.03px"]} px={["6", "6", "12"]} justifyContent={"space-between"} alignItems={"center"}  >
                 <Flex onClick={() => router.push("/")} as={"button"} alignItems={"center"} gap={"2"} >
                     <Image width={["32px", "32px", "60px"]} src={"/assets/logo.png"} alt="logo" />
                     <Flex flexDir={"column"} alignItems={"start"} >
-                        <Text fontWeight={"bold"} fontSize={["14px", "14px", "16px"]} color={pathname?.includes("term") ? primaryColor : (yaxis === 0) ? "white" : primaryColor} >Chasescroll</Text>
+                        <Text fontWeight={"bold"} fontSize={["14px", "14px", "16px"]} color={(pathname?.includes("term") || pathname?.includes("privacy")) ? primaryColor : (yaxis === 0) ? "white" : primaryColor} >Chasescroll</Text>
                         <Text fontWeight={"medium"} fontStyle={"italic"} fontSize={["9px", "9px", "10px"]}>Discover. Connect. Elevate Your Events</Text>
                     </Flex>
                 </Flex>
@@ -119,7 +119,7 @@ function HomeNavbar(
                                             lineHeight={"22.5px"} fontWeight={"semibold"}
                                             cursor={"pointer"} variant="outline" size="sm">
                                             <Flex gap={"3"} lineHeight={"22.5px"} fontWeight={"semibold"} alignItems={"center"} _hover={{ color: primaryColor }} >
-                                                <Text color={pathname?.includes("term") ? "black" : (yaxis === 0) ? "white" : "black"} lineHeight={"22.5px"} fontWeight={"semibold"} >{item?.label}</Text> <IoChevronDown color={pathname?.includes("term") ? "black" : (yaxis === 0) ? "white" : "black"} />
+                                                <Text color={(pathname?.includes("term") || pathname?.includes("privacy")) ? "black" : (yaxis === 0) ? "white" : "black"} lineHeight={"22.5px"} fontWeight={"semibold"} >{item?.label}</Text> <IoChevronDown color={(pathname?.includes("term") || pathname?.includes("privacy")) ? "black" : (yaxis === 0) ? "white" : "black"} />
                                             </Flex>
                                         </Button>
                                     </Menu.Trigger>
@@ -157,13 +157,13 @@ function HomeNavbar(
                     <Flex display={["none", "none", "none", "none", "flex"]} gap={"4"} >
                         <CustomButton onClick={() => clickHandler("/dashboard/product")} text={"Dashboard"} width={"152px"} backgroundColor={primaryColor} height={"48px"} borderWidth={"1px"} borderColor={primaryColor} color={"white"} borderRadius={"999px"} />
                     </Flex>
-                )} 
+                )}
                 <Drawer.Root size={"xs"}>
                     <Drawer.Trigger asChild>
                         <Flex display={["flex", "flex", "flex", "flex", "none"]} cursor={"pointer"} >
                             <HambergerMenu
                                 size="30"
-                                color={pathname?.includes("term") ? primaryColor : (yaxis === 0) ? "white" : primaryColor}
+                                color={(pathname?.includes("term") || pathname?.includes("privacy")) ? primaryColor : (yaxis === 0) ? "white" : primaryColor}
                             />
                         </Flex>
                     </Drawer.Trigger>
