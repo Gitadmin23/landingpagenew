@@ -1,7 +1,6 @@
 
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { title } from "process";
 import { useRouter } from "next/navigation";
 import { CustomButton } from "../shared";
 import { DownArrowIcon } from "@/svg";
