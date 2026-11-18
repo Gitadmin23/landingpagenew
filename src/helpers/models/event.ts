@@ -1,85 +1,128 @@
 import type { IUser } from "./user"
 
 export interface IEvent {
-    "id": string,
-    "createdDate": number,
-    "lastModifiedBy": IUser,
-    "createdBy":IUser,
-    "lastModifiedDate": number,
-    "isDeleted": boolean,
-    "picUrls": Array<string>,
-    "eventMemberRole": any,
-    "eventName": "Wiz",
-    "eventDescription": "Roll one, smoke one",
-    "eventType": "Birthday_Party",
-    "locationType": string,
-    "currency": "NGN",
-    "currentPicUrl": string,
-    "eventFunnelGroupID": string,
-    "mediaType": any,
-    "currentVideoUrl": any,
-    "donationName": any,
-    "affiliateID": any,
-    "isPublic": boolean,
-    "isExclusive": boolean,
-    "mask": boolean,
-    "isOrganizer": boolean,
-    "attendeesVisibility": boolean,
-    "isJoined": boolean,
-    "isSaved": boolean,
-    "isFree": boolean,
-    "isBought": boolean,
-    "ticketBought": boolean,
-    "externalEvent": any,
-    "donationEnabled": any,
-    "minPrice": number,
-    "maxPrice": number,
-    "donationTargetAmount": any,
-    "totalDonated": any,
-    "startTime": number,
-    "endTime": number,
-    "startDate": number,
-    "endDate": number,
-    "expirationDate": any,
-    "memberCount": number,
-    "boughtTickets": number,
-    "scannedTickets": number,
-    "prStatus": string,
+    id: string,
+    createdDate?: string,
+    lastModifiedBy: IUser;
+    createdBy: IUser;
+    lastModifiedDate?: number;
+    isDeleted: boolean;
+    picUrls: string[],
+    eventMemberRole: string;
+    eventName: string;
+    joinSetting: string;
+    eventDescription: string;
+    eventType: string;
+    locationType: string;
+    currency: string;
+    currentPicUrl: string;
+    eventFunnelGroupID: string;
+    mediaType: string;
+    currentVideoUrl: string;
+    isPublic: boolean;
+    isExclusive: boolean;
+    mask: boolean;
+    isOrganizer: boolean;
+    attendeesVisibility: boolean;
+    isJoined: boolean;
+    isSaved: boolean;
+    isFree: boolean;
+    isBought: boolean;
+    ticketBought: boolean;
+    externalEvent: string;
+    minPrice: any;
+    maxPrice: any;
+    startTime: any;
+    endTime: any;
+    startDate: any;
+    endDate: any;
+    expirationDate: string;
+    memberCount: number;
+    location: {
+        toBeAnnounced: boolean
+        locationDetails?: string,
+        link?: string,
+        links?: Array<string>,
+        address?: string,
+        latlng?: string,
+        placeIds?: string
+    },
+    productTypeData: IProductTypeData[],
+    interestedUsers: IUser[],
+    collaborators: IUser[]
+    admins: IUser[];
+    acceptedAdmins: IUser[]
+    acceptedCollaborators: IUser[]
+    donationName: string,
+    donationTargetAmount: string,
+    donationEnabled: boolean,
+    totalDonated: string,
+    prStatus: string,
+    affiliateID: string,
+    affiliates: Array<{
+        "affiliateType": string,
+        "percent": number
+    }>
+}
+
+export interface IProductTypeData {
+    totalNumberOfTickets: string | number,
+    ticketPrice: string | number,
+    ticketType: string,
+    minTicketBuy: string | number,
+    maxTicketBuy: string | number,
+    rerouteURL?: string
+    ticketsSold?: 0,
+    endDate?: string | number,
+    endTime?: string | number,
+    startDate?: string | number,
+    startTime?: string | number
+    description: string
+}
+
+export interface ICreateEvent {
+    picUrls: Array<string>,
+    eventType: string,
+    eventName: string,
+    eventDescription: string,
+    isPublic: boolean,
+    currentPicUrl: string,
+    eventFunnelGroupID: string,
+    attendeesVisibility: boolean,
+    startTime: string,
+    endTime: string,
+    startDate: string,
+    endDate: string,
+    locationType: string,
+    currency: string,
+    additionalMessage: string
     "location": {
         "link": string,
-        "links": Array<[
-            string
-        ]>,
+        "links": Array<string>,
         "address": string,
         "locationDetails": string,
         "latlng": string,
-        "placeIds": any,
+        "placeIds": string,
         "toBeAnnounced": boolean
     },
-    "productTypeData": Array<{
-        "totalNumberOfTickets": number,
-        "ticketPrice": number,
-        "ticketType": string,
-        "ticketsSold": number,
-        "sale": any,
-        "minTicketBuy": number,
-        "maxTicketBuy": number,
-        "rerouteURL": string,
-        "clickThroughCount": any,
-        "startTime": number,
-        "endTime": number,
-        "startDate": number,
-        "endDate": number
-    }>,
-    "interestedUsers": Array<any>,
-    "collaborators": Array<any>,
-    "admins": Array<any>,
-    "acceptedCollaborators": Array<any>,
-    "acceptedAdmins": Array<any>,
-    "affiliates": Array<
+    "productTypeData": [
         {
-            "affiliateType": string,
-            "percent": any
+            "totalNumberOfTickets": number | any,
+            "ticketPrice": number | any,
+            "ticketType": string,
+            "minTicketBuy": number | any,
+            "maxTicketBuy": number | any,
+            isFree: boolean,
+            description: string,
+            isHidden?: boolean
         }
-    >
+    ],
+    collaborators: Array<any>,
+    admins: Array<any>,
+    affiliates: [
+        {
+            affiliateType: string,
+            percent: number | any
+        }
+    ]
 }

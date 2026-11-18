@@ -16,6 +16,8 @@ import { unsecureHttpService } from "@/helpers/services/httpService";
 import { IMAGE_URL } from "@/helpers/services/urls";
 import type { IEvent } from "@/helpers/models/event";
 import type { IBusiness } from "@/helpers/models/product";
+import InterestedUsers from "../shared/interestedUser";
+import { IUser } from "@/helpers/models/user";
 
 interface EventItem {
     id: string;
@@ -35,6 +37,8 @@ interface EventItem {
     buttonBg: string;
     buttonColor: string;
     image: string;
+    interestedUsers: IUser[]
+    count: number
 }
 
 const fallbackImage = "/images/events/afrobeats-concert.jpg";
@@ -130,6 +134,8 @@ const mapApiEventToEventItem = (ev: IEvent, index: number): EventItem => {
         buttonBg: isFree ? "#EEF2FF" : "#5465E0",
         buttonColor: isFree ? "#4F46E5" : "white",
         image: getImageUrl(ev.currentPicUrl, fallbackImage),
+        interestedUsers: ev.interestedUsers || [],
+        count: ev.memberCount || 0
     };
 };
 
@@ -607,6 +613,8 @@ export default function CuratedEventsSection() {
                             >
                                 {/* Card Image with Badges */}
                                 <Box w={"full"} h={["200px", "210px", "225px"]} pos={"relative"} overflow={"hidden"}>
+                                    <Box position={"absolute"} inset={"0px"}
+                                        bg={"rgba(0, 0, 0, 0.2)"} />
                                     <Image
                                         src={item.image}
                                         alt={item.title}
@@ -628,9 +636,9 @@ export default function CuratedEventsSection() {
                                         px={"3.5"}
                                         py={"1"}
                                         rounded={"full"}
-                                        bg={"rgba(255, 255, 255, 0.95)"}
+                                        bg={"rgba(255, 255, 255, 0.1)"}
                                         backdropFilter={"blur(6px)"}
-                                        color={"#0F172A"}
+                                        color={"#FFF"}
                                         fontSize={"12px"}
                                         fontWeight={"600"}
                                         boxShadow={"0 2px 8px rgba(0, 0, 0, 0.12)"}
@@ -646,14 +654,12 @@ export default function CuratedEventsSection() {
                                         px={"3"}
                                         py={"1"}
                                         rounded={"full"}
-                                        bg={item.statusBg}
-                                        color={"white"}
                                         fontSize={"11px"}
                                         fontWeight={"700"}
                                         letterSpacing={"0.5px"}
                                         boxShadow={"0 2px 8px rgba(0, 0, 0, 0.2)"}
                                     >
-                                        {item.statusBadge}
+                                        <InterestedUsers users={item?.interestedUsers || []} count={item?.count || 0} size={"xs"} />
                                     </Box>
                                 </Box>
 

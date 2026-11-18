@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { Box, Flex, Grid, Image, Skeleton, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { IoStar, IoArrowForward, IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { IoStar, IoArrowForward, IoChevronBack, IoChevronForward, IoLocate, IoPin, IoMapOutline } from "react-icons/io5";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import { LuBuilding2, LuStore, LuHandshake } from "react-icons/lu";
 import { unsecureHttpService } from "@/helpers/services/httpService";
 import { IMAGE_URL } from "@/helpers/services/urls";
 import type { IBusiness } from "@/helpers/models/product";
 import { textLimit } from "@/helpers/utils/textlimit";
+import { formatNumberWithK } from "@/helpers/utils/formatNumberWithK";
 
 const fallbackServiceImage = "/images/for-professionals.jpg";
 
@@ -310,264 +311,277 @@ export default function GetThingDone() {
                 >
                     {/* Left: Featured Talent Profile Card with Live 5-Service Animated Slider */}
                     <Flex
-                        gridColumn={["span 12", "span 12", "span 5"]}
-                        bg={"white"}
-                        rounded={"24px"}
-                        overflow={"hidden"}
-                        border={"1px solid #E2E8F0"}
-                        boxShadow={"0 4px 20px rgba(0, 0, 0, 0.04)"}
-                        flexDir={"column"}
-                        justifyContent={"space-between"}
-                        pos={"relative"}
-                        transition={"all 0.25s ease"}
-                        _hover={{
-                            transform: "translateY(-4px)",
-                            boxShadow: "0 14px 32px rgba(0, 0, 0, 0.08)",
-                            borderColor: "#CBD5E1",
-                        }}
-                    >
-                        {/* Persistent Top Navigation Bar: 5-Item Loop Dots & Controls */}
-                        {services.length > 1 && (
-                            <Flex
-                                pos={"absolute"}
-                                top={"4"}
-                                left={"4"}
-                                right={"4"}
-                                justifyContent={"space-between"}
-                                alignItems={"center"}
-                                zIndex={"10"}
-                            >
-                                {/* Clickable 5-item indicator dots */}
+                        flexDir={"column"} gap={"2"}
+                        gridColumn={["span 12", "span 12", "span 5"]} >
+
+                        <Flex
+                            gridColumn={["span 12", "span 12", "span 5"]}
+                            bg={"white"}
+                            rounded={"24px"}
+                            overflow={"hidden"}
+                            border={"1px solid #E2E8F0"}
+                            boxShadow={"0 4px 20px rgba(0, 0, 0, 0.04)"}
+                            flexDir={"column"}
+                            justifyContent={"space-between"}
+                            pos={"relative"}
+                            transition={"all 0.25s ease"}
+                            _hover={{
+                                transform: "translateY(-4px)",
+                                boxShadow: "0 14px 32px rgba(0, 0, 0, 0.08)",
+                                borderColor: "#CBD5E1",
+                            }}
+                        >
+                            {/* Persistent Top Navigation Bar: 5-Item Loop Dots & Controls */}
+                            {services.length > 1 && (
                                 <Flex
-                                    gap={"1.5"}
+                                    pos={"absolute"}
+                                    top={"4"}
+                                    left={"4"}
+                                    right={"4"}
+                                    justifyContent={"space-between"}
                                     alignItems={"center"}
-                                    bg={"rgba(0, 0, 0, 0.45)"}
-                                    backdropFilter={"blur(8px)"}
-                                    px={"2.5"}
-                                    py={"1.5"}
-                                    rounded={"full"}
+                                    zIndex={"10"}
                                 >
-                                    {services.map((_, idx) => (
-                                        <Box
-                                            key={idx}
+
+                                    {/* Prev / Next controls */}
+                                    <Flex gap={"1.5"} alignItems={"center"}>
+                                        <Flex
                                             as="button"
-                                            onClick={(e: React.MouseEvent) => {
-                                                e.stopPropagation();
-                                                setCurrentIndex(idx);
-                                            }}
-                                            w={currentIndex === idx ? "20px" : "6px"}
-                                            h={"6px"}
+                                            onClick={handlePrev}
+                                            w={"30px"}
+                                            h={"30px"}
                                             rounded={"full"}
-                                            bg={currentIndex === idx ? "#3B82F6" : "rgba(255, 255, 255, 0.55)"}
-                                            transition={"all 0.3s ease"}
+                                            bg={"rgba(0, 0, 0, 0.45)"}
+                                            backdropFilter={"blur(8px)"}
+                                            color={"white"}
+                                            alignItems={"center"}
+                                            justifyContent={"center"}
                                             cursor={"pointer"}
-                                            aria-label={`Go to service ${idx + 1}`}
-                                        />
+                                            transition={"all 0.2s ease"}
+                                            _hover={{ bg: "rgba(0, 0, 0, 0.75)", transform: "scale(1.05)" }}
+                                            aria-label="Previous service"
+                                        >
+                                            <IoChevronBack size={"15px"} />
+                                        </Flex>
+                                        <Flex
+                                            as="button"
+                                            onClick={handleNext}
+                                            w={"30px"}
+                                            h={"30px"}
+                                            rounded={"full"}
+                                            bg={"rgba(0, 0, 0, 0.45)"}
+                                            backdropFilter={"blur(8px)"}
+                                            color={"white"}
+                                            alignItems={"center"}
+                                            justifyContent={"center"}
+                                            cursor={"pointer"}
+                                            transition={"all 0.2s ease"}
+                                            _hover={{ bg: "rgba(0, 0, 0, 0.75)", transform: "scale(1.05)" }}
+                                            aria-label="Next service"
+                                        >
+                                            <IoChevronForward size={"15px"} />
+                                        </Flex>
+                                    </Flex>
+                                </Flex>
+                            )}
+
+                            {/* Slider Carousel Viewport & Moving Track */}
+                            <Box w={"full"} overflow={"hidden"}>
+                                <Flex
+                                    w={"full"}
+                                    transform={`translateX(-${currentIndex * 100}%)`}
+                                    transition={"transform 0.65s cubic-bezier(0.25, 1, 0.5, 1)"}
+                                >
+                                    {services.map((service, idx) => (
+                                        <Flex
+                                            key={service.id || idx}
+                                            minW={"100%"}
+                                            maxW={"100%"}
+                                            flexDir={"column"}
+                                            flexShrink={0}
+                                        >
+                                            {/* Photo with Overlay */}
+                                            <Box w={"full"} h={["270px", "300px", "320px"]} pos={"relative"} overflow={"hidden"}>
+                                                <Image
+                                                    src={getServiceImageUrl(service.images?.[0])}
+                                                    alt={getVendorDisplayName(service)}
+                                                    w={"full"}
+                                                    h={"full"}
+                                                    objectFit={"cover"}
+                                                    objectPosition={"top center"}
+                                                />
+
+                                                {/* Dark Gradient Overlay */}
+                                                <Box
+                                                    pos={"absolute"}
+                                                    bottom={"0px"}
+                                                    insetX={"0px"}
+                                                    h={"160px"}
+                                                    style={{
+                                                        background:
+                                                            "linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%)",
+                                                    }}
+                                                />
+
+                                                {/* Text inside overlay */}
+                                                <Flex
+                                                    pos={"absolute"}
+                                                    bottom={"4"}
+                                                    left={"4"}
+                                                    right={"4"}
+                                                    flexDir={"column"}
+                                                    gap={"1"}
+                                                    zIndex={"2"}
+                                                >
+                                                    <Flex alignItems={"center"} gap={"2"}>
+                                                        <Box
+                                                            px={"2.5"}
+                                                            py={"0.5"}
+                                                            rounded={"full"}
+                                                            bg={"#3B82F6"}
+                                                            color={"white"}
+                                                            fontSize={"10.5px"}
+                                                            fontWeight={"700"}
+                                                            letterSpacing={"0.5px"}
+                                                            w={"fit-content"}
+                                                        >
+                                                            {formatCategory(service.category)}
+                                                        </Box>
+                                                        <Text fontSize={"10.5px"} color={"rgba(255, 255, 255, 0.85)"} fontWeight={"600"}>
+                                                            {idx + 1} of {services.length}
+                                                        </Text>
+                                                    </Flex>
+                                                    <Text
+                                                        fontSize={"20px"}
+                                                        fontWeight={"800"}
+                                                        color={"white"}
+                                                        lineHeight={"120%"}
+                                                        mt={"1"}
+                                                        overflow={"hidden"}
+                                                        textOverflow={"ellipsis"}
+                                                        whiteSpace={"nowrap"}
+                                                    >
+                                                        {getVendorDisplayName(service)}
+                                                    </Text>
+                                                    <Flex gap={"1"} alignItems={"center"} mt="1" h={"5"} >
+                                                        <Box w={"fit-content"} >
+                                                            {/* < color="white" size={"15"} /> */}
+                                                        </Box>
+                                                        <Text
+                                                            color="white"
+                                                            fontSize="13px"
+                                                            fontWeight="400"
+                                                            mt="1"
+                                                            mb="1"
+                                                            textAlign="left"
+                                                            textTransform={"capitalize"}
+                                                        >
+                                                            {textLimit(service?.location?.locationDetails, 40)}
+                                                        </Text>
+                                                    </Flex>
+                                                </Flex>
+                                            </Box>
+
+                                            {/* Middle Content */}
+                                            <Flex flexDir={"column"} p={"5"} gap={"3"}>
+                                                {/* Stats Row */}
+                                                <Flex justifyContent={"space-between"} alignItems={"center"}>
+                                                    <Flex alignItems={"center"} gap={"1.5"}>
+                                                        <IoStar color={"#D97706"} size={"15px"} />
+                                                        <Text fontWeight={"800"} fontSize={"14px"} color={"#0F172A"}>
+                                                            {service.rating ? Number(service.rating).toFixed(1) : "4.9"}
+                                                        </Text>
+                                                        <Text fontSize={"13px"} color={"#64748B"}>
+                                                            {service.totalBooking
+                                                                ? `(${service.totalBooking} completed gigs)`
+                                                                : "(Verified Talent)"}
+                                                        </Text>
+                                                    </Flex>
+                                                    <Text fontWeight="600" fontSize="14px" color="#5465FF">
+                                                        <span style={{ fontSize: "12px" }}>Starting rate - </span> {service?.price ? formatNumberWithK(service?.price) : ""}
+                                                        {!service?.hasFixedPrice && "/hr"}
+                                                    </Text>
+                                                </Flex>
+
+                                                {/* Quote */}
+                                                <Text
+                                                    fontSize={"13px"}
+                                                    color={"#475569"}
+                                                    lineHeight={"155%"}
+                                                    mt={"1"}
+                                                    minH={"42px"}
+                                                    style={{
+                                                        display: "-webkit-box",
+                                                        WebkitLineClamp: 2,
+                                                        WebkitBoxOrient: "vertical",
+                                                        overflow: "hidden",
+                                                    }}
+                                                >
+                                                    &ldquo;{getServiceQuote(service)}&rdquo;
+                                                </Text>
+                                            </Flex>
+                                            {/* Bottom Action Pill */}
+                                            <Box p={"5"} pt={"0"}>
+                                                <Flex
+                                                    as="button"
+                                                    onClick={() => routeToPage(service?.id)}
+                                                    w={"full"}
+                                                    py={"3"}
+                                                    px={"5"}
+                                                    rounded={"full"}
+                                                    border={"1px solid #E2E8F0"}
+                                                    bg={"white"}
+                                                    color={"#3B82F6"}
+                                                    fontWeight={"600"}
+                                                    fontSize={"13.5px"}
+                                                    justifyContent={"space-between"}
+                                                    alignItems={"center"}
+                                                    cursor={"pointer"}
+                                                    transition={"all 0.2s ease"}
+                                                    _hover={{
+                                                        bg: "#F8FAFC",
+                                                        borderColor: "#CBD5E1",
+                                                    }}
+                                                >
+                                                    <Text>Book {textLimit(service.name, 20)}</Text>
+                                                    <IoArrowForward size={"16px"} />
+                                                </Flex>
+                                            </Box>
+                                        </Flex>
                                     ))}
                                 </Flex>
+                            </Box>
 
-                                {/* Prev / Next controls */}
-                                <Flex gap={"1.5"} alignItems={"center"}>
-                                    <Flex
-                                        as="button"
-                                        onClick={handlePrev}
-                                        w={"30px"}
-                                        h={"30px"}
-                                        rounded={"full"}
-                                        bg={"rgba(0, 0, 0, 0.45)"}
-                                        backdropFilter={"blur(8px)"}
-                                        color={"white"}
-                                        alignItems={"center"}
-                                        justifyContent={"center"}
-                                        cursor={"pointer"}
-                                        transition={"all 0.2s ease"}
-                                        _hover={{ bg: "rgba(0, 0, 0, 0.75)", transform: "scale(1.05)" }}
-                                        aria-label="Previous service"
-                                    >
-                                        <IoChevronBack size={"15px"} />
-                                    </Flex>
-                                    <Flex
-                                        as="button"
-                                        onClick={handleNext}
-                                        w={"30px"}
-                                        h={"30px"}
-                                        rounded={"full"}
-                                        bg={"rgba(0, 0, 0, 0.45)"}
-                                        backdropFilter={"blur(8px)"}
-                                        color={"white"}
-                                        alignItems={"center"}
-                                        justifyContent={"center"}
-                                        cursor={"pointer"}
-                                        transition={"all 0.2s ease"}
-                                        _hover={{ bg: "rgba(0, 0, 0, 0.75)", transform: "scale(1.05)" }}
-                                        aria-label="Next service"
-                                    >
-                                        <IoChevronForward size={"15px"} />
-                                    </Flex>
-                                </Flex>
-                            </Flex>
-                        )}
-
-                        {/* Slider Carousel Viewport & Moving Track */}
-                        <Box w={"full"} overflow={"hidden"}>
+                        </Flex>
+                        <Flex w={"full"} justifyContent={"center"} alignItems={"center"} >
                             <Flex
-                                w={"full"}
-                                transform={`translateX(-${currentIndex * 100}%)`}
-                                transition={"transform 0.65s cubic-bezier(0.25, 1, 0.5, 1)"}
+                                gap={"1.5"}
+                                alignItems={"center"}
+                                bg={"rgba(0, 0, 0, 0.45)"}
+                                backdropFilter={"blur(8px)"}
+                                px={"2.5"}
+                                py={"1.5"}
+                                rounded={"full"}
                             >
-                                {services.map((service, idx) => (
-                                    <Flex
-                                        key={service.id || idx}
-                                        minW={"100%"}
-                                        maxW={"100%"}
-                                        flexDir={"column"}
-                                        flexShrink={0}
-                                    >
-                                        {/* Photo with Overlay */}
-                                        <Box w={"full"} h={["270px", "300px", "320px"]} pos={"relative"} overflow={"hidden"}>
-                                            <Image
-                                                src={getServiceImageUrl(service.images?.[0])}
-                                                alt={getVendorDisplayName(service)}
-                                                w={"full"}
-                                                h={"full"}
-                                                objectFit={"cover"}
-                                                objectPosition={"top center"}
-                                            />
-
-                                            {/* Dark Gradient Overlay */}
-                                            <Box
-                                                pos={"absolute"}
-                                                bottom={"0px"}
-                                                insetX={"0px"}
-                                                h={"160px"}
-                                                style={{
-                                                    background:
-                                                        "linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%)",
-                                                }}
-                                            />
-
-                                            {/* Text inside overlay */}
-                                            <Flex
-                                                pos={"absolute"}
-                                                bottom={"4"}
-                                                left={"4"}
-                                                right={"4"}
-                                                flexDir={"column"}
-                                                gap={"1"}
-                                                zIndex={"2"}
-                                            >
-                                                <Flex alignItems={"center"} gap={"2"}>
-                                                    <Box
-                                                        px={"2.5"}
-                                                        py={"0.5"}
-                                                        rounded={"full"}
-                                                        bg={"#3B82F6"}
-                                                        color={"white"}
-                                                        fontSize={"10.5px"}
-                                                        fontWeight={"700"}
-                                                        letterSpacing={"0.5px"}
-                                                        w={"fit-content"}
-                                                    >
-                                                        {formatCategory(service.category)}
-                                                    </Box>
-                                                    <Text fontSize={"10.5px"} color={"rgba(255, 255, 255, 0.85)"} fontWeight={"600"}>
-                                                        {idx + 1} of {services.length}
-                                                    </Text>
-                                                </Flex>
-                                                <Text
-                                                    fontSize={"20px"}
-                                                    fontWeight={"800"}
-                                                    color={"white"}
-                                                    lineHeight={"120%"}
-                                                    mt={"1"}
-                                                    overflow={"hidden"}
-                                                    textOverflow={"ellipsis"}
-                                                    whiteSpace={"nowrap"}
-                                                >
-                                                    {getVendorDisplayName(service)}
-                                                </Text>
-                                                <Text
-                                                    fontSize={"12px"}
-                                                    color={"rgba(255, 255, 255, 0.9)"}
-                                                    fontWeight={"500"}
-                                                    overflow={"hidden"}
-                                                    textOverflow={"ellipsis"}
-                                                    whiteSpace={"nowrap"}
-                                                >
-                                                    {getServiceSubtitle(service)}
-                                                </Text>
-                                            </Flex>
-                                        </Box>
-
-                                        {/* Middle Content */}
-                                        <Flex flexDir={"column"} p={"5"} gap={"3"}>
-                                            {/* Stats Row */}
-                                            <Flex justifyContent={"space-between"} alignItems={"center"}>
-                                                <Flex alignItems={"center"} gap={"1.5"}>
-                                                    <IoStar color={"#D97706"} size={"15px"} />
-                                                    <Text fontWeight={"800"} fontSize={"14px"} color={"#0F172A"}>
-                                                        {service.rating ? Number(service.rating).toFixed(1) : "4.9"}
-                                                    </Text>
-                                                    <Text fontSize={"13px"} color={"#64748B"}>
-                                                        {service.totalBooking
-                                                            ? `(${service.totalBooking} completed gigs)`
-                                                            : "(Verified Talent)"}
-                                                    </Text>
-                                                </Flex>
-                                                <Text fontSize={"14px"} fontWeight={"700"} color={"#3B82F6"}>
-                                                    {formatServicePrice(service)}
-                                                </Text>
-                                            </Flex>
-
-                                            {/* Quote */}
-                                            <Text
-                                                fontSize={"13px"}
-                                                color={"#475569"}
-                                                lineHeight={"155%"}
-                                                mt={"1"}
-                                                minH={"42px"}
-                                                style={{
-                                                    display: "-webkit-box",
-                                                    WebkitLineClamp: 2,
-                                                    WebkitBoxOrient: "vertical",
-                                                    overflow: "hidden",
-                                                }}
-                                            >
-                                                &ldquo;{getServiceQuote(service)}&rdquo;
-                                            </Text>
-                                        </Flex>
-                                        {/* Bottom Action Pill */}
-                                        <Box p={"5"} pt={"0"}>
-                                            <Flex
-                                                as="button"
-                                                onClick={() => routeToPage(service?.id)}
-                                                w={"full"}
-                                                py={"3"}
-                                                px={"5"}
-                                                rounded={"full"}
-                                                border={"1px solid #E2E8F0"}
-                                                bg={"white"}
-                                                color={"#3B82F6"}
-                                                fontWeight={"600"}
-                                                fontSize={"13.5px"}
-                                                justifyContent={"space-between"}
-                                                alignItems={"center"}
-                                                cursor={"pointer"}
-                                                transition={"all 0.2s ease"}
-                                                _hover={{
-                                                    bg: "#F8FAFC",
-                                                    borderColor: "#CBD5E1",
-                                                }}
-                                            >
-                                                <Text>Book {textLimit(service.name, 20)}</Text>
-                                                <IoArrowForward size={"16px"} />
-                                            </Flex>
-                                        </Box>
-                                    </Flex>
+                                {services.map((_, idx) => (
+                                    <Box
+                                        key={idx}
+                                        as="button"
+                                        onClick={(e: React.MouseEvent) => {
+                                            e.stopPropagation();
+                                            setCurrentIndex(idx);
+                                        }}
+                                        w={currentIndex === idx ? "20px" : "6px"}
+                                        h={"6px"}
+                                        rounded={"full"}
+                                        bg={currentIndex === idx ? "#3B82F6" : "rgba(255, 255, 255, 0.55)"}
+                                        transition={"all 0.3s ease"}
+                                        cursor={"pointer"}
+                                        aria-label={`Go to service ${idx + 1}`}
+                                    />
                                 ))}
                             </Flex>
-                        </Box>
-
+                        </Flex>
                     </Flex>
 
                     {/* Right: 2x2 Services & Ecosystem Grid */}
