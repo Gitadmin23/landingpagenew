@@ -1,11 +1,16 @@
 import { Flex } from "@chakra-ui/react";
 import YouTube from "react-youtube";
 
-
 interface IProps { 
-    video?: boolean,
-    url?: string
+    video?: boolean;
+    url?: string;
 }
+
+const getYouTubeId = (url?: string) => {
+    if (!url) return "";
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+    return match ? match[1] : url;
+};
 
 const opts = {
     height: '330',
@@ -27,21 +32,19 @@ const optsmobile = {
 };
 
 const CustomVideo = (props: IProps) => {
-
-    const {
-        url
-    } = props
+    const { url } = props;
+    const videoId = getYouTubeId(url);
 
     return (
-        <Flex w={"full"} h={["220px", "220px", "330px"]} bgColor={"white"} justifyContent={"center"} rounded={"14px"} alignItems={"center"}  >
-            <Flex display={["none", "none", "flex"]} >
-                <YouTube className=" videoborder " videoId={url} opts={opts} />
+        <Flex w={"full"} h={["220px", "220px", "330px"]} bgColor={"white"} justifyContent={"center"} rounded={"14px"} overflow={"hidden"} alignItems={"center"}>
+            <Flex display={["none", "none", "flex"]}>
+                <YouTube className="videoborder" videoId={videoId} opts={opts} />
             </Flex>
-            <Flex display={["flex", "flex", "none"]} >
-                <YouTube className=" videoborder " videoId={url} opts={optsmobile} />
+            <Flex display={["flex", "flex", "none"]}>
+                <YouTube className="videoborder" videoId={videoId} opts={optsmobile} />
             </Flex>
         </Flex>
-    )
-}
+    );
+};
 
-export default CustomVideo
+export default CustomVideo;

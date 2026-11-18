@@ -25,6 +25,8 @@ const useAuth = () => {
     const codequery = query?.get("code");
     const eventId = query?.get("eventId");
     const productId = query?.get("productId");
+    const serviceId = query?.get("serviceId");
+    const rentalId = query?.get("rentalId");
     const create = query?.get("create");
 
     const pathname = usePathname();
@@ -57,6 +59,10 @@ const useAuth = () => {
 
                 if (productId) {
                     window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${data?.data?.access_token}`;
+                } else if (serviceId) {
+                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/service/${serviceId}?token=${data?.data?.access_token}`;
+                } else if (rentalId) {
+                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details-rental/${rentalId}?token=${data?.data?.access_token}`;
                 } else if (
                     create !== "event" &&
                     create !== "fundraiser" &&
@@ -195,8 +201,8 @@ const useAuth = () => {
         },
         validationSchema: Yup.object({
             username: Yup.string().required("Required")
-            .trim()
-            .min(2, "User name must be at least 2 characters"),
+                .trim()
+                .min(2, "User name must be at least 2 characters"),
             password: Yup.string().required("Required"),
         }),
         onSubmit: (data: ILogin) => {

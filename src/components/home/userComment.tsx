@@ -1,9 +1,8 @@
 
 import { QuoteIcon } from "@/svg";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import React from "react";
-import { IoChevronBack } from "react-icons/io5";
-import { IoChevronForward } from "react-icons/io5";
+import React, { useState } from "react";
+import { IoChevronBack, IoChevronForward, IoPlay } from "react-icons/io5";
 import YouTube from "react-youtube";
 
 interface IProps {
@@ -62,39 +61,110 @@ export default function UserComment() {
     }
 
     const Video = (props: IProps) => {
+        const { url } = props;
+        const [isPlaying, setIsPlaying] = useState(false);
 
-        const {
-            url
-        } = props
+        const videoOpts = {
+            height: '330',
+            width: '512',
+            playerVars: {
+                autoplay: 1,
+            },
+        };
+
+        const videoOptsMobile = {
+            height: '220',
+            width: '420',
+            playerVars: {
+                autoplay: 1,
+            },
+        };
+
+        if (isPlaying && url) {
+            return (
+                <Flex
+                    w={["320px", "420px", "512px"]}
+                    h={["220px", "220px", "330px"]}
+                    bgColor={"black"}
+                    justifyContent={"center"}
+                    borderWidth={"1px"}
+                    borderColor={"#E2E8F0"}
+                    rounded={"14px"}
+                    alignItems={"center"}
+                    overflow={"hidden"}
+                >
+                    <Flex display={["none", "none", "flex"]}>
+                        <YouTube className="videoborder" videoId={url} opts={videoOpts} />
+                    </Flex>
+                    <Flex display={["flex", "flex", "none"]}>
+                        <YouTube className="videoborder" videoId={url} opts={videoOptsMobile} />
+                    </Flex>
+                </Flex>
+            );
+        }
 
         return (
-            <Flex w={["420px", "420px", "512px"]} h={["220px", "220px", "330px"]} bgColor={"white"} justifyContent={"center"} borderWidth={"1px"} borderColor={"#E2E8F0"} rounded={"14px"} alignItems={"center"}  >
-                <Flex display={["none", "none", "flex"]} >
-                    <YouTube className=" videoborder " videoId={url} opts={opts} />
-                </Flex>
-                <Flex display={["flex", "flex", "none"]} >
-                    <YouTube className=" videoborder " videoId={url} opts={optsmobile} />
+            <Flex
+                w={["320px", "420px", "512px"]}
+                h={["220px", "220px", "330px"]}
+                bgColor={"#0F172A"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                borderWidth={"1px"}
+                borderColor={"#E2E8F0"}
+                rounded={"14px"}
+                position={"relative"}
+                overflow={"hidden"}
+                cursor={"pointer"}
+                onClick={() => setIsPlaying(true)}
+                role="button"
+                aria-label="Play customer review video"
+                transition={"transform 0.2s ease, box-shadow 0.2s ease"}
+                _hover={{
+                    transform: "scale(1.01)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                }}
+            >
+                {/* Video Thumbnail */}
+                <Image
+                    src={`https://img.youtube.com/vi/${url}/hqdefault.jpg`}
+                    alt="Customer review video thumbnail"
+                    w={"full"}
+                    h={"full"}
+                    objectFit={"cover"}
+                />
+
+                {/* Dark Overlay */}
+                <Box
+                    pos={"absolute"}
+                    inset={"0"}
+                    bg={"blackAlpha.400"}
+                    transition={"background 0.2s ease"}
+                    _hover={{ bg: "blackAlpha.200" }}
+                />
+
+                {/* Play Button */}
+                <Flex
+                    pos={"absolute"}
+                    w={["52px", "58px", "62px"]}
+                    h={["52px", "58px", "62px"]}
+                    rounded={"full"}
+                    bg={"red.600"}
+                    color={"white"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    pl={"1"}
+                    boxShadow={"0 6px 20px rgba(220, 38, 38, 0.45)"}
+                    transition={"transform 0.2s ease, background 0.2s ease"}
+                    _hover={{
+                        transform: "scale(1.1)",
+                        bg: "red.500",
+                    }}
+                >
+                    <IoPlay size={"26px"} />
                 </Flex>
             </Flex>
-        )
-    }
-
-    const opts = {
-        height: '330',
-        width: '512',
-        playerVars: {
-            // https://developers.google.com/youtube/player_parameters
-            autoplay: 0,
-        },
-    };
-
-    const optsmobile = {
-        height: '220',
-        width: '420',
-        playerVars: {
-            // https://developers.google.com/youtube/player_parameters
-            autoplay: 0,
-        },
+        );
     };
     // https://youtu.be/f8gJriFJE5k
 

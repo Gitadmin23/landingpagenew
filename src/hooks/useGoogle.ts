@@ -16,6 +16,8 @@ const useGoogle = () => {
     const query = useSearchParams();
     const eventId = query?.get('eventId');
     const productId = query?.get('productId');
+    const serviceId = query?.get('serviceId');
+    const rentalId = query?.get('rentalId');
     const create = query?.get('create');
 
     const { mutate: signInWithGoogle, isPending: signInPending } = useMutation({
@@ -78,10 +80,14 @@ const useGoogle = () => {
             if (data?.data?.username === data?.data?.email) {
                 setOpen(true);
 
-            } else { 
+            } else {
                 if (productId) {
                     window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${access_Token}`;
-                } else if(create !== "event" && create !== "fundraiser" && create) {
+                } else if (serviceId) {
+                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/service/${serviceId}?token=${data?.data?.access_token}`;
+                } else if (rentalId) {
+                    window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details-rental/${rentalId}?token=${data?.data?.access_token}`;
+                } else if (create !== "event" && create !== "fundraiser" && create) {
                     window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${access_Token}`;
                 } else {
                     window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`);
@@ -111,7 +117,7 @@ const useGoogle = () => {
             });
             if (productId) {
                 window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${productId}?token=${access_Token}`;
-            } else if(create !== "event" && create !== "fundraiser" && create) {
+            } else if (create !== "event" && create !== "fundraiser" && create) {
                 window.location.href = `${DASHBOARDPAGE_URL}${create === "services" ? "/dashboard/kisok/create-service" : create === "rental" ? "/dashboard/kisok/create-rental" : create === "product" ? "/dashboard/kisok/create" : ""}${productId ?? ""}?token=${access_Token}`;
             } else {
                 window.location.replace(`${EVENT_PAGE_URL}?token=${access_Token}${eventId ? `&eventId=${eventId}` : ""}${create ? `&create=${create}` : ""}`);

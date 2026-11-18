@@ -21,6 +21,16 @@ export default function LandingPageLayout({ children }: IProps) {
     }, []);
 
     useEffect(() => {
+        if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = 0;
+        }
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         const container = scrollRef.current;
         if (container) {
             container.addEventListener("scroll", handleScroll, { passive: true });

@@ -1,11 +1,12 @@
 "use client";
 import React, { useRef } from "react";
 import useCustomTheme from "@/hooks/useTheme";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { LuUserPlus, LuClipboardCheck, LuPiggyBank } from "react-icons/lu";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { CustomVideo } from "../shared";
 
 export default function AboutEventSection() {
     const { primaryColor } = useCustomTheme();
@@ -55,7 +56,7 @@ export default function AboutEventSection() {
                 justifyContent={"space-between"}
                 gap={["8", "10", "14"]}
             >
-                {/* Left Side: Phone Mockup Container */}
+                {/* Left Side: Video Container */}
                 <Flex
                     w={["full", "full", "46%"]}
                     justifyContent={"center"}
@@ -63,25 +64,17 @@ export default function AboutEventSection() {
                 >
                     <Box
                         w={"full"}
-                        maxW={["360px", "420px", "460px"]}
+                        maxW={["360px", "420px", "520px"]}
                         bg={"#F4F6FE"}
                         rounded={["24px", "28px", "32px"]}
-                        p={["5", "6", "8"]}
+                        p={["3", "4", "5"]}
                         display={"flex"}
                         justifyContent={"center"}
                         alignItems={"center"}
                         boxShadow={"0 8px 30px rgba(84, 101, 224, 0.06)"}
+                        overflow={"hidden"}
                     >
-                        <Image
-                            src="/images/about-phone-mockup.png"
-                            alt="Chasescroll mobile app preview"
-                            w={["260px", "300px", "340px"]}
-                            maxW={"100%"}
-                            h={"auto"}
-                            objectFit={"contain"}
-                            transition={"transform 0.4s ease"}
-                            _hover={{ transform: "scale(1.02)" }}
-                        />
+                        <CustomVideo url="https://youtu.be/jQz3p1z9OLQ" />
                     </Box>
                 </Flex>
 

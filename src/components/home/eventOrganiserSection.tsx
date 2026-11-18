@@ -1,14 +1,17 @@
 "use client";
 import React, { useRef } from "react";
 import useCustomTheme from "@/hooks/useTheme";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useInView } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { LuMessageSquare, LuPercent, LuShieldCheck } from "react-icons/lu";
+import { CustomVideo } from "../shared";
 
 export default function EventOrganiserSection() {
     const { primaryColor } = useCustomTheme();
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true });
+    const { push } = useRouter();
 
     const perks = [
         {
@@ -120,9 +123,36 @@ export default function EventOrganiserSection() {
                             );
                         })}
                     </Flex>
+
+                    {/* CTA Button */}
+                    <Flex pt={"2"}>
+                        <Flex
+                            as="button"
+                            onClick={() => push("/home/event")}
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            px={"7"}
+                            py={"3.5"}
+                            rounded={"full"}
+                            bg={primaryColor}
+                            color={"white"}
+                            fontSize={"14px"}
+                            fontWeight={"600"}
+                            cursor={"pointer"}
+                            boxShadow={"0 8px 24px rgba(84, 101, 224, 0.35)"}
+                            transition={"all 0.2s ease"}
+                            _hover={{
+                                opacity: 0.92,
+                                transform: "translateY(-1px)",
+                            }}
+                            whiteSpace={"nowrap"}
+                        >
+                            Create Event
+                        </Flex>
+                    </Flex>
                 </Flex>
 
-                {/* Right Side: Phone Mockup Container */}
+                {/* Right Side: Video Container */}
                 <Flex
                     w={["full", "full", "46%"]}
                     justifyContent={"center"}
@@ -130,25 +160,17 @@ export default function EventOrganiserSection() {
                 >
                     <Box
                         w={"full"}
-                        maxW={["360px", "420px", "460px"]}
+                        maxW={["360px", "420px", "520px"]}
                         bg={"#F4F6FE"}
                         rounded={["24px", "28px", "32px"]}
-                        p={["5", "6", "8"]}
+                        p={["3", "4", "5"]}
                         display={"flex"}
                         justifyContent={"center"}
                         alignItems={"center"}
                         boxShadow={"0 8px 30px rgba(84, 101, 224, 0.06)"}
+                        overflow={"hidden"}
                     >
-                        <Image
-                            src="/images/versax-phone-mockup.png"
-                            alt="Chasescroll Versax mobile app preview"
-                            w={["260px", "300px", "340px"]}
-                            maxW={"100%"}
-                            h={"auto"}
-                            objectFit={"contain"}
-                            transition={"transform 0.4s ease"}
-                            _hover={{ transform: "scale(1.02)" }}
-                        />
+                        <CustomVideo url="https://youtu.be/nPtY0-WgUgo" />
                     </Box>
                 </Flex>
             </Flex>
