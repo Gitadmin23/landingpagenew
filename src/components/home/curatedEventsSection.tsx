@@ -595,6 +595,8 @@ export default function CuratedEventsSection() {
                     >
                         {events.map((item) => (
                             <Flex
+                                as="button"
+                                onClick={() => routeToPage(item.id)}
                                 key={item.id}
                                 w={["290px", "320px", "360px"]}
                                 flexShrink={0}
