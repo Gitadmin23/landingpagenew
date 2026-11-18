@@ -143,7 +143,7 @@ export default function HeroSection() {
                     </Text>
 
                     {/* Mobile Only: CTA Action Buttons (Get started & Login) */}
-                    <Flex
+                    {/* <Flex
                         display={["flex", "flex", "none"]}
                         w={"full"}
                         alignItems={"center"}
@@ -172,7 +172,7 @@ export default function HeroSection() {
                             color={"white"}
                             flex={"1"}
                         />
-                    </Flex>
+                    </Flex> */}
 
                     {/* Desktop Category Filter Bar */}
                     <Flex
