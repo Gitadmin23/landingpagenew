@@ -18,9 +18,6 @@ function InterestedUsers(props: Props) {
         size,
     } = props
 
-    console.log("Events", event);
-
-
     return (
         <>
             {users?.length > 0 && (
