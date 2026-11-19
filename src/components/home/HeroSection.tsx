@@ -78,7 +78,7 @@ export default function HeroSection() {
                 {/* Background Artwork Image */}
                 <Box pos={"absolute"} inset={"0px"} zIndex={"1"}>
                     <Image
-                        src="/images/hero/naija-hero-bg.jpg"
+                        src="/images/hero/naija-hero-bg.png"
                         alt="Hero Naija Vibes Background"
                         w={"full"}
                         h={"full"}

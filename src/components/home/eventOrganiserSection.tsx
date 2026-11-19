@@ -72,9 +72,7 @@ export default function EventOrganiserSection() {
                             color={"#0F172A"}
                             letterSpacing={"-0.02em"}
                         >
-                            Why event organizers turn to
-                            <br />
-                            <span style={{ color: primaryColor }}>Chasescroll.</span>
+                            Why event organizers turn to <span style={{ color: primaryColor }}>Chasescroll.</span>
                         </Text>
                     </Box>
 

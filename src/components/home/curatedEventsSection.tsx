@@ -18,6 +18,7 @@ import type { IEvent } from "@/helpers/models/event";
 import type { IBusiness } from "@/helpers/models/product";
 import InterestedUsers from "../shared/interestedUser";
 import { IUser } from "@/helpers/models/user";
+import { textLimit } from "@/helpers/utils/textlimit";
 
 interface EventItem {
     id: string;
@@ -275,8 +276,8 @@ export default function CuratedEventsSection() {
                             fontWeight={"400"}
                         >
                             {isServicesMode
-                                ? "Strict escrow protection. Payments released to service providers only after verified delivery."
-                                : "Strict escrow protection. Funds released to host only after successful check-in."}
+                                ? "Secure escrow protection: Funds are held securely and released to the host's wallet 24 hours after a successful ticket purchase. Hosts can cash out their available funds anytime before, during, or after the event."
+                                : "Secure escrow protection: Funds are held securely and released to the host's wallet 24 hours after a successful ticket purchase. Hosts can cash out their available funds anytime before, during, or after the event."}
                         </Text>
                     </Box>
 
@@ -324,7 +325,7 @@ export default function CuratedEventsSection() {
                         {/* See All Button */}
                         <Flex
                             as="button"
-                            onClick={() => router.push(isServicesMode ? "/home/service" : "/home/event")}
+                            onClick={() => router.push(isServicesMode ? "/product/services" : "/product")}
                             alignItems={"center"}
                             justifyContent={"center"}
                             px={"4"}
@@ -684,6 +685,7 @@ export default function CuratedEventsSection() {
                                             color={"#0F172A"}
                                             minH={["auto", "auto", "46px"]}
                                             lineClamp={2}
+                                            mr={"auto"}
                                         >
                                             {item.title}
                                         </Text>
@@ -700,23 +702,25 @@ export default function CuratedEventsSection() {
 
                                         {/* Host Row with Escrow Badge */}
                                         <Flex alignItems={"center"} gap={"2.5"} mt={"1"}>
-                                            <Flex
-                                                w={"24px"}
-                                                h={"24px"}
-                                                rounded={"full"}
-                                                bg={"#EEF2FF"}
-                                                color={"#4F46E5"}
-                                                alignItems={"center"}
-                                                justifyContent={"center"}
-                                                fontSize={"10px"}
-                                                fontWeight={"700"}
-                                                flexShrink={"0"}
-                                            >
-                                                {item.hostAvatar}
+                                            <Flex gap={"1"} alignItems={"center"} >
+                                                <Flex
+                                                    w={"24px"}
+                                                    h={"24px"}
+                                                    rounded={"full"}
+                                                    bg={"#EEF2FF"}
+                                                    color={"#4F46E5"}
+                                                    alignItems={"center"}
+                                                    justifyContent={"center"}
+                                                    fontSize={"10px"}
+                                                    fontWeight={"700"}
+                                                    flexShrink={"0"}
+                                                >
+                                                    {item.hostAvatar}
+                                                </Flex>
+                                                <Text fontSize={"13px"} fontWeight={"500"} color={"#334155"}>
+                                                    {textLimit(item.hostName, 10)}
+                                                </Text>
                                             </Flex>
-                                            <Text fontSize={"13px"} fontWeight={"500"} color={"#334155"} lineClamp={1}>
-                                                {item.hostName}
-                                            </Text>
                                             <Flex
                                                 alignItems={"center"}
                                                 gap={"1"}

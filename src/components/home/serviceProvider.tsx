@@ -112,9 +112,7 @@ export default function ServiceProvider() {
                         letterSpacing={"-0.02em"}
                         mb={["4", "5", "6"]}
                     >
-                        How Payments Work for Service
-                        <br />
-                        Providers
+                        How Payments Work for Service Providers
                     </Text>
 
                     <Text
